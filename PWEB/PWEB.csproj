@@ -12,6 +12,12 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="bootstrap" />
     <None Remove="bootstrap.sass" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Utils" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Templating" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Core" />
+    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -25,6 +31,12 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10" />
     <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.9.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="6.0.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="6.0.10" />
   </ItemGroup>
 
   <ItemGroup>
