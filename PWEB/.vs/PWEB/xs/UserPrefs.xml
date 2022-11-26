@@ -1,28 +1,28 @@
 ﻿<Properties StartupConfiguration="{D99BDE3F-C4FB-4E64-865A-60E0EDAB4350}|Default">
   <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Areas/Identity/Pages/Account/Register.cshtml.cs">
     <Files>
-      <File FileName="Views/Home/Index.cshtml" Line="1" Column="1" />
-      <File FileName="Migrations/20221126213227_Migracao1.cs" Line="1" Column="1" />
-      <File FileName="Views/Shared/_LoginPartial.cshtml" Line="1" Column="1" />
-      <File FileName="Areas/Identity/Pages/_ValidationScriptsPartial.cshtml" Line="1" Column="1" />
-      <File FileName="Areas/Identity/Pages/_ViewImports.cshtml" Line="1" Column="1" />
-      <File FileName="Areas/Identity/Pages/_ViewStart.cshtml" Line="1" Column="1" />
-      <File FileName="Areas/Identity/Pages/Error.cshtml" Line="1" Column="1" />
-      <File FileName="Controllers/HomeController.cs" Line="1" Column="1" />
-      <File FileName="Views/Shared/Error.cshtml" Line="1" Column="1" />
-      <File FileName="Views/Shared/_ValidationScriptsPartial.cshtml" Line="1" Column="1" />
-      <File FileName="Views/Shared/_Layout.cshtml" Line="1" Column="1" />
-      <File FileName="Program.cs" Line="20" Column="21" />
-      <File FileName="Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml" Line="16" Column="1" />
-      <File FileName="Areas/Identity/Pages/Account/Login.cshtml" Line="20" Column="23" />
-      <File FileName="Areas/Identity/Pages/Account/Register.cshtml" Line="34" Column="23" />
-      <File FileName="Models/ApplicationUser.cs" Line="9" Column="33" />
+      <File FileName="Views/Home/Index.cshtml" />
+      <File FileName="Migrations/20221126213227_Migracao1.cs" />
+      <File FileName="Views/Shared/_LoginPartial.cshtml" />
+      <File FileName="Areas/Identity/Pages/_ValidationScriptsPartial.cshtml" />
+      <File FileName="Areas/Identity/Pages/_ViewImports.cshtml" />
+      <File FileName="Areas/Identity/Pages/_ViewStart.cshtml" />
+      <File FileName="Areas/Identity/Pages/Error.cshtml" />
+      <File FileName="Controllers/HomeController.cs" />
+      <File FileName="Views/Shared/Error.cshtml" />
+      <File FileName="Views/Shared/_ValidationScriptsPartial.cshtml" />
+      <File FileName="Views/Shared/_Layout.cshtml" />
+      <File FileName="Program.cs" />
+      <File FileName="Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml" />
+      <File FileName="Areas/Identity/Pages/Account/Login.cshtml" />
+      <File FileName="Areas/Identity/Pages/Account/Register.cshtml" />
+      <File FileName="Models/ApplicationUser.cs" />
       <File FileName="Areas/Identity/Pages/Account/Register.cshtml.cs" Line="92" Column="21" />
     </Files>
     <Pads>
@@ -34,9 +34,7 @@
                 <Node name="Identity" expanded="True">
                   <Node name="Pages" expanded="True">
                     <Node name="Account" expanded="True">
-                      <Node name="Register.cshtml" expanded="True">
-                        <Node name="Register.cshtml.cs" selected="True" />
-                      </Node>
+                      <Node name="Register.cshtml" expanded="True" />
                     </Node>
                   </Node>
                 </Node>
@@ -44,6 +42,7 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
+                <Node name="Home" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
             </Node>
@@ -52,5 +51,5 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MultiItemStartupConfigurations />
 </Properties>
