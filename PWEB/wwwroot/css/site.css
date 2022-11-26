@@ -1,4 +1,4 @@
-﻿html {
+html {
   font-size: 14px;
 }
 
@@ -17,16 +17,39 @@ body {
   margin-bottom: 60px;
 }
 
-.registerBtn {
-    background-color: transparent;
-    border: none;
-    color: #131313;
+.banner_01 {
+    background-image: url('/img/banner_01.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
-
-.loginBtn {
-    background-color: #ff8e1c;
-    border-radius: 8px;
-    color: white;
-    border: none;
-    width: 180px;
+.banner_02 {
+    background-image: url('/img/banner_02.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.banner_03 {
+    background-image: url('/img/banner_03.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.banner_04 {
+    background-image: url('/img/banner_04.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.banner_05 {
+    background-image: url('/img/banner_05.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.banner_06 {
+    background-image: url('/img/banner_06.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
