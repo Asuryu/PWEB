@@ -1,19 +1,25 @@
 ﻿<Properties StartupConfiguration="{D99BDE3F-C4FB-4E64-865A-60E0EDAB4350}|Default">
+  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Shared/_Layout.cshtml">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="wwwroot/css/site.css">
     <Files>
-      <File FileName="Views/Shared/_Layout.cshtml" Line="30" Column="32" />
-      <File FileName="Views/Shared/_LoginPartial.cshtml" Line="17" Column="9" />
-      <File FileName="appsettings.Development.json" Line="7" Column="4" />
+      <File FileName="Views/Shared/_Layout.cshtml" Line="14" Column="7" />
+      <File FileName="Views/Shared/_LoginPartial.cshtml" />
+      <File FileName="appsettings.Development.json" />
       <File FileName="Views/Home/Index.cshtml" Line="1" Column="1" />
-      <File FileName="Properties/launchSettings.json" Line="1" Column="1" />
-      <File FileName="Models/ErrorViewModel.cs" Line="1" Column="1" />
-      <File FileName="appsettings.json" Line="3" Column="48" />
-      <File FileName="Program.cs" Line="31" Column="27" />
-      <File FileName="Migrations/20221126014114_Inicial.cs" Line="9" Column="6" />
-      <File FileName="wwwroot/css/header.proto" Line="17" Column="21" />
-      <File FileName="../../../../../../usr/local/share/dotnet/sdk/7.0.100/Sdks/Microsoft.NET.Sdk.Razor/targets/Microsoft.NET.Sdk.Razor.StaticWebAssets.targets" Line="419" Column="5" />
-      <File FileName="wwwroot/header.css" Line="69" Column="6" />
+      <File FileName="Properties/launchSettings.json" />
+      <File FileName="Models/ErrorViewModel.cs" />
+      <File FileName="appsettings.json" />
+      <File FileName="Program.cs" />
+      <File FileName="Migrations/20221126014114_Inicial.cs" />
+      <File FileName="../../../../../../usr/local/share/dotnet/sdk/7.0.100/Sdks/Microsoft.NET.Sdk.Razor/targets/Microsoft.NET.Sdk.Razor.StaticWebAssets.targets" />
+      <File FileName="Views/Home/Privacy.cshtml" Line="1" Column="1" />
+      <File FileName="wwwroot/css/site.css" Line="10" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -33,10 +39,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

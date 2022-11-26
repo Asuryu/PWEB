@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "yL1N3Agc8WJlSEd+DQKeVj6Ia2iMt83hTLoY0+c3uMg=",
+  "Hash": "pmpAH9lJfw574vxixIo07JFzktEHIoqrejaaVTA3YC4=",
   "Source": "PWEB",
   "BasePath": "_content/PWEB",
   "Mode": "Default",
@@ -1647,6 +1647,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/css/bootstrap.rtl.min.css.map"
+    },
+    {
+      "Identity": "/Users/asuryu/Documents/GitHub/PWEB/PWEB/wwwroot/css/site.css",
+      "SourceId": "PWEB",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/asuryu/Documents/GitHub/PWEB/PWEB/wwwroot/",
+      "BasePath": "_content/PWEB",
+      "RelativePath": "css/site.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/css/site.css"
     },
     {
       "Identity": "/Users/asuryu/Documents/GitHub/PWEB/PWEB/wwwroot/js/bootstrap.bundle.js",

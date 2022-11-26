@@ -30,7 +30,6 @@
   <ItemGroup>
     <Content Remove="wwwroot\favicon.ico" />
     <Content Remove="wwwroot\" />
-    <Content Remove="wwwroot\css\site.css" />
     <Content Remove="wwwroot\assets\" />
   </ItemGroup>
   <ItemGroup>

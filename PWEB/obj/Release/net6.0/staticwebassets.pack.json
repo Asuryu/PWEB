@@ -141,6 +141,10 @@
       "PackagePath": "staticwebassets/css/bootstrap.rtl.min.css.map"
     },
     {
+      "Id": "/Users/asuryu/Documents/GitHub/PWEB/PWEB/wwwroot/css/site.css",
+      "PackagePath": "staticwebassets/css/site.css"
+    },
+    {
       "Id": "/Users/asuryu/Documents/GitHub/PWEB/PWEB/wwwroot/js/bootstrap.bundle.js",
       "PackagePath": "staticwebassets/js/bootstrap.bundle.js"
     },
