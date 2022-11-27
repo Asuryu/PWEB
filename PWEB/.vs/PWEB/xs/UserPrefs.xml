@@ -1,11 +1,5 @@
 ﻿<Properties StartupConfiguration="{D99BDE3F-C4FB-4E64-865A-60E0EDAB4350}|Default">
-  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Areas/Identity/Pages/Account/Register.cshtml.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="appsettings.json">
     <Files>
       <File FileName="Views/Home/Index.cshtml" />
       <File FileName="Migrations/20221126213227_Migracao1.cs" />
@@ -24,6 +18,7 @@
       <File FileName="Areas/Identity/Pages/Account/Register.cshtml" />
       <File FileName="Models/ApplicationUser.cs" />
       <File FileName="Areas/Identity/Pages/Account/Register.cshtml.cs" Line="92" Column="21" />
+      <File FileName="appsettings.json" Line="13" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -45,6 +40,7 @@
                 <Node name="Home" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
+              <Node name="appsettings.json" selected="True" />
             </Node>
           </Node>
         </State>
@@ -52,4 +48,10 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>
