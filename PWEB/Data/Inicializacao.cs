@@ -25,19 +25,16 @@ namespace PWEB.Data
             //Adicionar Default User - Admin
             var defaultUser = new ApplicationUser
             {
-                UserName = "admin@localhost.com",
-                Email = "admin@localhost.com",
+                UserName = "admin@isec.pt",
+                Email = "admin@isec.pt",
                 PrimeiroNome = "Administrador",
                 UltimoNome = "Local",
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true
             };
 
-            var user = await userManager.FindByEmailAsync(defaultUser.Email); if (user == null)
-            {
-                await userManager.CreateAsync(defaultUser, "PWEB_ADMIN_2022");
-                await userManager.AddToRoleAsync(defaultUser, Roles.Administrador.ToString());
-            }
+            await userManager.CreateAsync(defaultUser, "PWEB_ADMIN_2022");
+            await userManager.AddToRoleAsync(defaultUser, Roles.Administrador.ToString());
         }
     }
 }

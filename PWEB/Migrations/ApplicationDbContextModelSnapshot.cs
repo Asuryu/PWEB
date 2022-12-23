@@ -181,6 +181,12 @@ namespace PWEB.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("EmpresaId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("EmpresaId1")
+                        .HasColumnType("int");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -224,6 +230,10 @@ namespace PWEB.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmpresaId");
+
+                    b.HasIndex("EmpresaId1");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -233,6 +243,92 @@ namespace PWEB.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("PWEB.Models.Empresa", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<float>("Avaliacao")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SubscricaoAtiva")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Empresa");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Reserva", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DataEntrega")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataLevantamento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("VeiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("VeiculoId");
+
+                    b.ToTable("Reserva");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Veiculo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Categoria")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("Custo")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("EmpresaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Localizacao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tipo")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmpresaId");
+
+                    b.ToTable("Veiculo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -284,6 +380,57 @@ namespace PWEB.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PWEB.Models.ApplicationUser", b =>
+                {
+                    b.HasOne("PWEB.Models.Empresa", null)
+                        .WithMany("Funcionarios")
+                        .HasForeignKey("EmpresaId");
+
+                    b.HasOne("PWEB.Models.Empresa", null)
+                        .WithMany("Gestores")
+                        .HasForeignKey("EmpresaId1");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Reserva", b =>
+                {
+                    b.HasOne("PWEB.Models.ApplicationUser", "Cliente")
+                        .WithMany("Reservas")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PWEB.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoId");
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Veiculo");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Veiculo", b =>
+                {
+                    b.HasOne("PWEB.Models.Empresa", "Empresa")
+                        .WithMany("Veiculos")
+                        .HasForeignKey("EmpresaId");
+
+                    b.Navigation("Empresa");
+                });
+
+            modelBuilder.Entity("PWEB.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("Reservas");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Empresa", b =>
+                {
+                    b.Navigation("Funcionarios");
+
+                    b.Navigation("Gestores");
+
+                    b.Navigation("Veiculos");
                 });
 #pragma warning restore 612, 618
         }

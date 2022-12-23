@@ -8,6 +8,8 @@ namespace PWEB.Models
         public string PrimeiroNome { get; set; }
         public string UltimoNome { get; set; }
         public DateTime DataNascimento { get; set; }
+
+        public ICollection<Reserva> Reservas { get; set; }
     }
 }
 

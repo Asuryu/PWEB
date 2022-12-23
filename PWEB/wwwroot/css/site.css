@@ -2,6 +2,10 @@ html {
   font-size: 14px;
 }
 
+header {
+    margin-bottom: 20px;
+}
+
 @media (min-width: 768px) {
   html {
     font-size: 16px;
@@ -52,4 +56,20 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: 50% 50%;
+}
+
+.nyan-cat {
+    height: 250px;
+    border-radius: 8px;
+}
+
+footer {
+    position: absolute;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    align-content: center;
+    align-items: center;
 }

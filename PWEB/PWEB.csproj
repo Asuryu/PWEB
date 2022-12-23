@@ -18,6 +18,9 @@
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Templating" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Core" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration" />
+    <None Remove="Migrations\" />
+    <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+    <None Remove="ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -37,6 +40,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating" Version="6.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="6.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,5 +52,7 @@
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\assets\" />
+    <Folder Include="Migrations\" />
+    <Folder Include="ViewModels\" />
   </ItemGroup>
 </Project>
