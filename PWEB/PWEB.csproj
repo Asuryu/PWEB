@@ -21,6 +21,7 @@
     <None Remove="Migrations\" />
     <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
     <None Remove="ViewModels\" />
+    <None Remove="Views\Empresas\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -54,5 +55,6 @@
     <Folder Include="wwwroot\assets\" />
     <Folder Include="Migrations\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Views\Empresas\" />
   </ItemGroup>
 </Project>
