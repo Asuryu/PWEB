@@ -3,15 +3,15 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:41678",
-      "sslPort": 44328
+      "applicationUrl": "http://localhost:55761",
+      "sslPort": 44384
     }
   },
   "profiles": {
-    "PWEB": {
+    "PWEB_AulasP_2223": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://localhost:2054",
+      "applicationUrl": "https://localhost:7254;http://localhost:5254",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

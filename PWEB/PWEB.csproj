@@ -4,24 +4,22 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-PWEB-A2E56358-6614-4532-8410-6BB74DBBD772</UserSecretsId>
+    <UserSecretsId>aspnet-PWEB-B8E02B03-7701-4C31-9567-FED9CA533E76</UserSecretsId>
+    <DockerComposeProjectPath>docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'PWEB_AulasP_2223' " />
   <ItemGroup>
-    <None Remove="BootstrapIcons.AspNetCore" />
-    <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
-    <None Remove="bootstrap" />
-    <None Remove="bootstrap.sass" />
+    <None Remove="Microsoft.EntityFrameworkCore.Analyzers" />
+    <None Remove="NuGet.CommandLine" />
     <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Design" />
-    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Utils" />
-    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" />
-    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Templating" />
-    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration.Core" />
-    <None Remove="Microsoft.VisualStudio.Web.CodeGeneration" />
+    <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+    <None Remove="Swashbuckle.AspNetCore" />
+    <None Remove="Microsoft.EntityFrameworkCore" />
+    <None Remove="IdentityCore" />
+    <None Remove="Views\UserRoles\" />
     <None Remove="Migrations\" />
     <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
-    <None Remove="ViewModels\" />
-    <None Remove="Views\Empresas\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -31,30 +29,42 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10" />
-    <PackageReference Include="BootstrapIcons.AspNetCore" Version="1.9.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+<PrivateAssets>all</PrivateAssets>
+</PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="6.0.10" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Utils" Version="6.0.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="6.0.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Templating" Version="6.0.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="6.0.10" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="6.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.12" />
+    <PackageReference Include="NuGet.CommandLine" Version="6.3.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\favicon.ico" />
-    <Content Remove="wwwroot\" />
-    <Content Remove="wwwroot\assets\" />
+    <Content Remove="Views\Shared\QuickSearchPartial.cshtml" />
+    <Content Remove="wwwroot\img\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="wwwroot\" />
-    <Folder Include="wwwroot\" />
-    <Folder Include="wwwroot\assets\" />
+    <Folder Include="Views\UserRolesManager\" />
     <Folder Include="Migrations\" />
-    <Folder Include="ViewModels\" />
-    <Folder Include="Views\Empresas\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="ViewModels\UserRolesViewModel.cs">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Compile>
+    <Compile Update="ViewModels\ManageUserRolesViewModel.cs">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Compile>
   </ItemGroup>
 </Project>

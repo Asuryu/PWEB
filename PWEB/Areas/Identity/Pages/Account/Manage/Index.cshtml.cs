@@ -1,9 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
@@ -56,21 +57,39 @@ namespace PWEB.Areas.Identity.Pages.Account.Manage
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            ///
+
+            [Display(Name = "Primeiro Nome")]
+            public string PrimeiroNome { get; set; }
+
+            [Display(Name = "Último Nome")]
+            public string UltimoNome { get; set; }
+
+            [Display(Name = "Data de Nascimento")]
+            public DateTime DataNascimento { get; set; }
+
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
         }
 
         private async Task LoadAsync(ApplicationUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var primeiroNome = user.PrimeiroNome;
+            var ultimoNome = user.UltimoNome;
+            var birthdate = user.DataNascimento;
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                PrimeiroNome = primeiroNome,
+                UltimoNome = ultimoNome,
+                DataNascimento = birthdate,
             };
         }
 
@@ -99,6 +118,12 @@ namespace PWEB.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
+
+            user.PrimeiroNome = Input.PrimeiroNome;
+            user.UltimoNome = Input.UltimoNome;
+            user.DataNascimento = Input.DataNascimento;
+
+            await _userManager.UpdateAsync(user);
 
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)

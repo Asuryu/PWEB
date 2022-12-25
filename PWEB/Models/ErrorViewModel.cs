@@ -1,9 +1,9 @@
-﻿namespace PWEB.Models;
-
-public class ErrorViewModel
+namespace PWEB_AulasP_2223.Models
 {
-    public string? RequestId { get; set; }
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
 
-    public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
 }
-

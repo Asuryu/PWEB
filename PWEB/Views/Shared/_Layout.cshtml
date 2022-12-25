@@ -3,52 +3,67 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Rental4You</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <title>@ViewData["Title"] - PWEB Aulas 2022/23</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/header.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/bootstrap.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PWEB.styles.css" asp-append-version="true" />
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/carousel.css" asp-append-version="true" />
 </head>
-<body>
-    <header class="p-3 text-bg-dark">
-        <div class="container">
-            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                    <img style="height: 40px; margin-right: 15px;" src="~/assets/logo.png" />
-                </a>
+<body class="d-flex h-100 text-center  bg-white p-0 m-0">
+    <div class="cover-container d-flex w-100 h-100 p-0 mx-auto flex-column">
+        <header class="p-7 text-white">
+            <div class="container">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark mb-3 fixed-top" style="background: rgba(0, 0, 0, .5);">
+                    <div class="container">
+                        <a class="navbar-brand text-warning" href="#"><svg bootstrap-icon="SignTurnRightFill" class="text-warning" width="48" height="48" aria-label="SignTurnRightFill"></svg> <strong>PWEB</strong></a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">INÍCIO</a>
+                                </li>
+                                @*<li class="nav-item">
+                                        <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Contactos">CONTACTOS</a>
+                                    </li>*@
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Cursos" asp-action="Search">CURSOS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Categorias" asp-action="Index">CATEGORIAS</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Agendamentos" asp-action="Pedido">AGENDAMENTO</a>
+                                </li>
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" asp-area="" asp-controller="Agendamentos" asp-action="OsMeusAgendamentos">OS MEUS AGENDAMENTOS</a>
+                                    </li>
+                                }
+                            </ul>
+                            
 
-                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        <li><a class="nav-link text-white" asp-area="" asp-controller="Cursos" asp-action="Search">Cursos</a></li>
-                    }
-                </ul>
-
-                <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
-                </form>
-                <partial name="_LoginPartial" />
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </nav>
             </div>
-        </div>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+        </header>
+
+        <main class="px-0 mx-0">
             @RenderBody()
         </main>
-    </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2022 - Rental4You - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidade</a>
-        </div>
-    </footer>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2023 - PWEB Aulas - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-

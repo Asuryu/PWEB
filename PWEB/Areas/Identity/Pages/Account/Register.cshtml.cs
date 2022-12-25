@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
 
@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using PWEB.Models;
+using PWEB_AulasP_2223.Data;
 
 namespace PWEB.Areas.Identity.Pages.Account
 {
@@ -80,18 +81,6 @@ namespace PWEB.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required]
-            [Display(Name = "Primeiro Nome")]
-            public string PrimeiroNome { get; set; }
-
-            [Required]
-            [Display(Name = "Ultimo Nome")]
-            public string UltimoNome { get; set; }
-
-            [Required]
-            [Display(Name = "Data de Nascimento")]
-            public DateTime DataNascimento { get; set; }
-
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -101,6 +90,23 @@ namespace PWEB.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; }
+
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Primeiro Nome")]
+            public string PrimeiroNome { get; set; }
+
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Último Nome")]
+            public string UltimoNome { get; set; }
+
+            [Required]
+            [DataType(DataType.DateTime)]
+            [Display(Name = "Data de Nascimento")]
+            public DateTime DataNascimento { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -132,7 +138,9 @@ namespace PWEB.Areas.Identity.Pages.Account
                 user.PrimeiroNome = Input.PrimeiroNome;
                 user.UltimoNome = Input.UltimoNome;
                 user.DataNascimento = Input.DataNascimento;
+                await _userManager.UpdateAsync(user);
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                await _userManager.AddToRoleAsync(user, "Cliente");
 
                 if (result.Succeeded)
                 {

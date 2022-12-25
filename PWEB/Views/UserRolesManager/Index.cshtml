@@ -1,52 +1,53 @@
-﻿@model IEnumerable<PWEB.ViewModels.UserRolesViewModel>
+﻿@model IEnumerable<PWEB_AulasP_2223.ViewModels.UserRolesViewModel>
+
 @{
-    ViewData["Title"] = "Gestor de Roles";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "UserRoles";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
 
-<h1>Gestor de Roles</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                First Name
-            </th>
-            <th>
-                Last Name
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Roles
-            </th>
-            <th>
-                Action
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+    <h1>UserRoles</h1>
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrimeiroNome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UltimoNome)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Roles)
-                </td>
-                <td>
-                    <a asp-action="Details" asp-route-userId="@item.UserId">Details</a>
-                </td>
+                <th>
+                    First Name
+                </th>
+                <th>
+                    Last Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Roles
+                </th>
+                <th>
+                    Action
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrimeiroNome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UltimoNome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Roles)
+                    </td>
+                    <td>
+                        <a asp-action="Details" asp-route-userId="@item.UserId">Details</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using PWEB_AulasP_2223.ViewModels;
 using PWEB.Models;
-using PWEB.ViewModels;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,6 +35,7 @@ namespace PWEB.Controllers
                 userRolesViewModel.UltimoNome = user.UltimoNome;
                 userRolesViewModel.Email = user.Email;
                 userRolesViewModel.UserId = user.Id;
+                userRolesViewModel.UserName = user.UserName;
                 userRolesViewModel.Roles = await GetUserRoles(user);
                 listaUtilizadores.Add(userRolesViewModel);
             }
@@ -45,6 +46,37 @@ namespace PWEB.Controllers
         {
             return new List<string>(await _userManager.GetRolesAsync(user));
         }
+
+        public async Task<IActionResult> Details(string? userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            
+            var roles = await _roleManager.Roles.ToListAsync();
+            List<ManageUserRolesViewModel> manageUserRolesViewModels = new List<ManageUserRolesViewModel>();
+            foreach(var role in roles)
+            {
+                ManageUserRolesViewModel manage = new ManageUserRolesViewModel();
+                manage.RoleId = role.Id;
+                manage.RoleName = role.Name;
+                manage.Selected = await _userManager.IsInRoleAsync(user, role.Name);
+                manageUserRolesViewModels.Add(manage);
+            }
+            return View(manageUserRolesViewModels);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Details(List<ManageUserRolesViewModel> model, string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user != null)
+            {
+                foreach (var role in model)
+                {
+                    if (role.Selected) await _userManager.AddToRoleAsync(user, role.RoleName);
+                    else await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+                }
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
-

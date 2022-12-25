@@ -73,3 +73,8 @@ footer {
     align-content: center;
     align-items: center;
 }
+
+.site-logo:hover, .nav-link:hover {
+    transition: 0.1s;
+    opacity: 0.7;
+}
