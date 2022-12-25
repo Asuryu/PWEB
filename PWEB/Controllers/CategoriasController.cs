@@ -49,7 +49,6 @@ namespace PWEB_AulasP_2223.Controllers
         }
 
         // GET: Categorias/Create
-        [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             return View();
@@ -75,7 +74,6 @@ namespace PWEB_AulasP_2223.Controllers
         }
 
         // GET: Categorias/Edit/5
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Categorias == null)
@@ -96,7 +94,6 @@ namespace PWEB_AulasP_2223.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Descricao,Disponivel")] Categoria categoria)
         {
             if (id != categoria.Id)
@@ -128,7 +125,6 @@ namespace PWEB_AulasP_2223.Controllers
         }
 
         // GET: Categorias/Delete/5
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Categorias == null)
@@ -149,7 +145,6 @@ namespace PWEB_AulasP_2223.Controllers
         // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Categorias == null)

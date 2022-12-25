@@ -11,6 +11,7 @@ namespace PWEB_AulasP_2223.ViewModels
         public string UltimoNome { get; set; }
         public string Email { get; set; }
         public string UserName { get; set; }
+        public bool LockedAccount { get; set; }
         public IEnumerable<string>Roles { get; set; }
     }
 }

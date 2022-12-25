@@ -1,20 +1,20 @@
 ﻿@model IEnumerable<PWEB_AulasP_2223.ViewModels.UserRolesViewModel>
 
 @{
-    ViewData["Title"] = "UserRoles";
+    ViewData["Title"] = "Utilizadores";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
 
-    <h1>UserRoles</h1>
+    <h1>Gestão de Utilizadores</h1>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    First Name
+                    Primeiro Nome
                 </th>
                 <th>
-                    Last Name
+                    Último Nome
                 </th>
                 <th>
                     Email
@@ -23,9 +23,8 @@
                     Roles
                 </th>
                 <th>
-                    Action
+                    Ações
                 </th>
-                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -42,10 +41,21 @@
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Roles)
+                        @String.Join(" ", item.Roles)
                     </td>
                     <td>
-                        <a asp-action="Details" asp-route-userId="@item.UserId">Details</a>
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-userId="@item.UserId">Editar</a>
+                        @if (item.LockedAccount)
+                        {
+                            <a class="btn btn-success" asp-action="Enable" asp-route-userId="@item.UserId">Ativar conta</a>
+                            <a class="btn btn-danger disabled" asp-action="Disable" asp-route-userId="@item.UserId">Desativar conta</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success disabled" asp-action="Enable" asp-route-userId="@item.UserId">Ativar conta</a>
+                            <a class="btn btn-danger" asp-action="Disable" asp-route-userId="@item.UserId">Desativar conta</a>
+                        }
+
                     </td>
                 </tr>
             }

@@ -1,0 +1,22 @@
+﻿@model List<PWEB_AulasP_2223.ViewModels.ManageUserRolesViewModel>
+
+@{
+    ViewData["Title"] = "Utilizadores - Editar";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<h1>Gestão de Utilizadores</h1>
+<h4>Editar</h4>
+
+<form method="POST">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <input asp-for="@Model[i].RoleId" type="hidden" />
+        <input asp-for="@Model[i].RoleName" type="hidden" />
+        <input asp-for="@Model[i].Selected" />
+        <label asp-for="@Model[i].Selected">@Model[i].RoleName</label>
+        <br />
+    }
+    <input class="btn btn-warning" type="submit" />
+</form>

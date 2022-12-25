@@ -36,6 +36,7 @@ namespace PWEB.Controllers
                 userRolesViewModel.Email = user.Email;
                 userRolesViewModel.UserId = user.Id;
                 userRolesViewModel.UserName = user.UserName;
+                userRolesViewModel.LockedAccount = await _userManager.IsLockedOutAsync(user);
                 userRolesViewModel.Roles = await GetUserRoles(user);
                 listaUtilizadores.Add(userRolesViewModel);
             }
@@ -47,7 +48,7 @@ namespace PWEB.Controllers
             return new List<string>(await _userManager.GetRolesAsync(user));
         }
 
-        public async Task<IActionResult> Details(string? userId)
+        public async Task<IActionResult> Edit(string? userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             
@@ -65,7 +66,7 @@ namespace PWEB.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Details(List<ManageUserRolesViewModel> model, string userId)
+        public async Task<IActionResult> Edit(List<ManageUserRolesViewModel> model, string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
             if(user != null)
@@ -74,6 +75,38 @@ namespace PWEB.Controllers
                 {
                     if (role.Selected) await _userManager.AddToRoleAsync(user, role.RoleName);
                     else await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Enable(string? userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user != null)
+            {
+                bool isLockedOut = await _userManager.IsLockedOutAsync(user);
+                Console.WriteLine(isLockedOut);
+                if (isLockedOut)
+                {
+                    await _userManager.SetLockoutEnabledAsync(user, false);
+                    await _userManager.SetLockoutEndDateAsync(user, DateTime.MinValue);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Disable(string? userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user != null)
+            {
+                bool isLockedOut = await _userManager.IsLockedOutAsync(user);
+                Console.WriteLine(isLockedOut);
+                if (!isLockedOut)
+                {
+                    await _userManager.SetLockoutEnabledAsync(user, true);
+                    await _userManager.SetLockoutEndDateAsync(user, DateTime.MaxValue);
                 }
             }
             return RedirectToAction("Index");
