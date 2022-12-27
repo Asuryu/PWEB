@@ -174,6 +174,10 @@ namespace PWEB.Migrations
                     b.Property<DateTime>("DataNascimento")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -233,6 +237,8 @@ namespace PWEB.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("PWEB.Models.Categoria", b =>
@@ -277,6 +283,124 @@ namespace PWEB.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Empresas");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Reserva", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClienteId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DataEntrega")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataLevantamento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("VeiculoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClienteId1");
+
+                    b.HasIndex("EmpresaId");
+
+                    b.HasIndex("VeiculoId");
+
+                    b.ToTable("Reservas");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Veiculo", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Custo")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Localizacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Marca")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Modelo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoriaId");
+
+                    b.HasIndex("EmpresaId");
+
+                    b.ToTable("Veiculos");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Administrador", b =>
+                {
+                    b.HasBaseType("PWEB.Models.ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("Administrador");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Cliente", b =>
+                {
+                    b.HasBaseType("PWEB.Models.ApplicationUser");
+
+                    b.HasDiscriminator().HasValue("Cliente");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Funcionario", b =>
+                {
+                    b.HasBaseType("PWEB.Models.ApplicationUser");
+
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("EmpresaId");
+
+                    b.HasDiscriminator().HasValue("Funcionario");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Gestor", b =>
+                {
+                    b.HasBaseType("PWEB.Models.ApplicationUser");
+
+                    b.Property<int>("EmpresaId")
+                        .HasColumnType("int")
+                        .HasColumnName("Gestor_EmpresaId");
+
+                    b.HasIndex("EmpresaId");
+
+                    b.HasDiscriminator().HasValue("Gestor");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -328,6 +452,93 @@ namespace PWEB.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("PWEB.Models.Reserva", b =>
+                {
+                    b.HasOne("PWEB.Models.Cliente", "Cliente")
+                        .WithMany("Reservas")
+                        .HasForeignKey("ClienteId1");
+
+                    b.HasOne("PWEB.Models.Empresa", "Empresa")
+                        .WithMany("Reservas")
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PWEB.Models.Veiculo", "Veiculo")
+                        .WithMany()
+                        .HasForeignKey("VeiculoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Empresa");
+
+                    b.Navigation("Veiculo");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Veiculo", b =>
+                {
+                    b.HasOne("PWEB.Models.Categoria", "Categoria")
+                        .WithMany("Veiculos")
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PWEB.Models.Empresa", "Empresa")
+                        .WithMany("Veiculos")
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Empresa");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Funcionario", b =>
+                {
+                    b.HasOne("PWEB.Models.Empresa", "Empresa")
+                        .WithMany("Funcionarios")
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Gestor", b =>
+                {
+                    b.HasOne("PWEB.Models.Empresa", "Empresa")
+                        .WithMany("Gestores")
+                        .HasForeignKey("EmpresaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Empresa");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Categoria", b =>
+                {
+                    b.Navigation("Veiculos");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Empresa", b =>
+                {
+                    b.Navigation("Funcionarios");
+
+                    b.Navigation("Gestores");
+
+                    b.Navigation("Reservas");
+
+                    b.Navigation("Veiculos");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Cliente", b =>
+                {
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }
