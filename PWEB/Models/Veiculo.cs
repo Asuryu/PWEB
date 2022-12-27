@@ -9,11 +9,12 @@ namespace PWEB.Models
         public string Localizacao { get; set; }
 		public string Estado { get; set; }
 		public int Custo { get; set; }
+		public bool Ativo { get; set; }
 
         public int CategoriaId { get; set; }
 		public Categoria Categoria { get; set; }
 
-        public int EmpresaId { get; set; }
+        public int? EmpresaId { get; set; }
         public Empresa Empresa { get; set; }
     }
 }

@@ -17,7 +17,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using PWEB.Data;
 using PWEB.Models;
 using PWEB_AulasP_2223.Data;
 
@@ -27,6 +29,7 @@ namespace PWEB.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
         private readonly IUserStore<ApplicationUser> _userStore;
         private readonly IUserEmailStore<ApplicationUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
@@ -35,12 +38,14 @@ namespace PWEB.Areas.Identity.Pages.Account
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             IUserStore<ApplicationUser> userStore,
+            ApplicationDbContext context,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
             _userStore = userStore;
+            _context = context;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
@@ -144,6 +149,15 @@ namespace PWEB.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+
+                    var cliente = new Cliente
+                    {
+                        ApplicationUser = user,
+                        Reservas = new List<Reserva>()
+                    };
+                    _context.Update(cliente);
+                    await _context.SaveChangesAsync();
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

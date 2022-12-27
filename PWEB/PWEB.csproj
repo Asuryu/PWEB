@@ -21,6 +21,7 @@
     <None Remove="Migrations\" />
     <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
     <None Remove="Data\" />
+    <None Remove="Views\Veiculos\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -59,6 +60,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\img\" />
     <Folder Include="Data\" />
+    <Folder Include="Views\Veiculos\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ViewModels\UserRolesViewModel.cs">

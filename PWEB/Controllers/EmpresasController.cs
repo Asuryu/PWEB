@@ -100,9 +100,10 @@ namespace PWEB.Controllers
         public async Task<IActionResult> Create([Bind("Id,Nome,Avaliacao,SubscricaoAtiva")] Empresa empresa)
         {
 
-            //ModelState.Remove(nameof(empresa.Gestores));
-            //ModelState.Remove(nameof(empresa.Funcionarios));
-            //ModelState.Remove(nameof(empresa.Veiculos));
+            ModelState.Remove(nameof(empresa.Gestores));
+            ModelState.Remove(nameof(empresa.Funcionarios));
+            ModelState.Remove(nameof(empresa.Veiculos));
+            ModelState.Remove(nameof(empresa.Reservas));
 
             if (ModelState.IsValid)
             {
@@ -111,8 +112,8 @@ namespace PWEB.Controllers
 
                 var defaultUser = new ApplicationUser
                 {
-                    UserName = "gestor@" + empresa.Nome + ".com",
-                    Email = "gestor@" + empresa.Nome + ".com",
+                    UserName = "gestor@" + empresa.Nome.ToLower() + ".com",
+                    Email = "gestor@" + empresa.Nome.ToLower() + ".com",
                     PrimeiroNome = "Gestor",
                     UltimoNome = empresa.Nome,
                     EmailConfirmed = true,
@@ -123,6 +124,15 @@ namespace PWEB.Controllers
                 {
                     await _userManager.CreateAsync(defaultUser, "ISEC_PWeb_2022!");
                     await _userManager.AddToRoleAsync(defaultUser, "Gestor");
+                    var gestor = new Gestor
+                    {
+                        ApplicationUser = defaultUser,
+                        Empresa = empresa
+                    };
+                    _context.Update(gestor);
+                    empresa.Gestores.Add(gestor);
+                    _context.Update(empresa);
+                    await _context.SaveChangesAsync();
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -153,6 +163,12 @@ namespace PWEB.Controllers
             {
                 return NotFound();
             }
+
+            ModelState.Remove(nameof(empresa.Gestores));
+            ModelState.Remove(nameof(empresa.Funcionarios));
+            ModelState.Remove(nameof(empresa.Veiculos));
+            ModelState.Remove(nameof(empresa.Reservas));
+
             if (ModelState.IsValid)
             {
                 try
@@ -176,7 +192,7 @@ namespace PWEB.Controllers
             return View(empresa);
         }
 
-        // GET: Empresas/Delete/5
+        // GET: Categorias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Empresas == null)
@@ -184,8 +200,8 @@ namespace PWEB.Controllers
                 return NotFound();
             }
 
-            var empresa = await _context.Empresas.FirstOrDefaultAsync(m => m.Id == id);
-
+            var empresa = await _context.Empresas
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (empresa == null)
             {
                 return NotFound();
@@ -194,7 +210,7 @@ namespace PWEB.Controllers
             return View(empresa);
         }
 
-        // POST: Empresas/Delete/5
+        // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -206,7 +222,10 @@ namespace PWEB.Controllers
             var empresa = await _context.Empresas.FindAsync(id);
             if (empresa != null)
             {
-                // TODO: verificar se a empresa não tem veículos
+                if(empresa.Veiculos.Count > 0)
+                {
+                    return Problem("Não é possível eliminar a empresa pois esta contém veículos.");
+                }
                 _context.Empresas.Remove(empresa);
             }
 

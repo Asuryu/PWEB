@@ -1,0 +1,98 @@
+﻿@model IEnumerable<PWEB.Models.Veiculo>
+
+@{
+    ViewData["Title"] = "Veiculos";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>Gestão de Veiculos</h1>
+
+<p>
+    <a asp-action="Create">Criar novo veículo</a>
+</p>
+
+<div class="column">
+    <div class="col-10">
+        Mostrar:
+        <a asp-action="Index" asp-controller="Veiculos" asp-route-ativos="">Todos</a> |
+        <a asp-action="Index" asp-route-ativos="true">Activos</a> |
+        <a asp-action="Index" asp-route-ativos="false">Inactivos</a>
+    </div>
+    <div class="col-10">
+        Ordenar por custo:
+        <a asp-action="Index" asp-controller="Veiculos" asp-route-ordenarAscendentemente="true">Ascendente</a> |
+        <a asp-action="Index" asp-route-ordenarAscendentemente="false">Descendente</a>
+    </div>
+    <div class="col-10">
+        <form method="post">
+            Pesquisa:
+            <input type="text" id="TextoAPesquisar" name="TextoAPesquisar">
+            <select name="CategoriaId" asp-items="ViewBag.ListaDeCategorias"></select>
+            <input class="btn btn-primary" type="submit" value="Pesquisar" />
+        </form>
+    </div>
+    <br />
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modelo)
+            </th>
+            <th>
+                Localização
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Custo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ativo)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Localizacao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Custo)€
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Ativo)
+            </td>
+            <td>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a>
+                <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

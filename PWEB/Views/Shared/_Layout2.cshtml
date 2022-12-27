@@ -23,13 +23,16 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a class="nav-link text-white" asp-area="" asp-controller="Categorias" asp-action="">Categorias</a></li>
+                        <li><a class="nav-link text-white" asp-area="" asp-controller="Veiculos" asp-action="">Veículos</a></li>
+                        <li><a class="nav-link text-white" asp-area="" asp-controller="Reservas" asp-action="">Reservas</a></li>
                         <li><a class="nav-link text-white" asp-area="" asp-controller="Empresas" asp-action="">Empresas</a></li>
+                        <li><a class="nav-link text-white" asp-area="" asp-controller="Funcionarios" asp-action="">Funcionários</a></li>
                         <li><a class="nav-link text-white" asp-area="" asp-controller="UserRolesManager" asp-action="">Utilizadores</a></li>
                     }
                 </ul>
 
                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+                    <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Procurar veículos..." aria-label="Search">
                 </form>
                 <partial name="_LoginPartial" />
             </div>
