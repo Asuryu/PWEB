@@ -20,6 +20,7 @@
     <None Remove="Views\UserRoles\" />
     <None Remove="Migrations\" />
     <None Remove="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" />
+    <None Remove="Data\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -57,6 +58,7 @@
     <Folder Include="Views\UserRolesManager\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\img\" />
+    <Folder Include="Data\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ViewModels\UserRolesViewModel.cs">

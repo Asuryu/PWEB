@@ -1,9 +1,9 @@
 ﻿using System;
 namespace PWEB.Models
 {
-	public class Administrador : ApplicationUser
+	public class Administrador
 	{
-
+		public int Id { get; set; }
+		public ApplicationUser ApplicationUser { get; set; }
 	}
 }
-
