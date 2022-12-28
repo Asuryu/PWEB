@@ -3,8 +3,244 @@
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<style>
+    .main {
+        text-align: center;
+        padding: 20px;
+        color: black;
+        height: 100%;
+        width: 100%;
+    }
 
+    @* Style image to be shown only in body *@
+
+    .image {
+        width: auto;
+        height: 300px;
+        overflow: hidden;
+        z-index: -1;
+        padding: 20px;
+    }
+
+    .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    @* Styling text in order to see it properly above the image *@
+
+    .main h1 {
+        font-size: 40px;
+        font-weight: bold;
+    }
+
+    .main p {
+        font-size: 20px;
+    }
+
+
+    .text-bg-dark {
+        background-color: #343a40;
+        color: white;
+    }
+    .searchContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #ff9e49;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .searchContainer form {
+        width: 100%;
+        margin: 0 10px;
+    }
+
+    .searchContainer form input {
+        width: 100%;
+    }
+
+    .searchContainer form input::placeholder {
+        color: white;
+    }
+
+    .searchContainer form input:focus {
+        border: 1px solid #343a40;
+        box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+    }
+
+    .searchContainer form input:focus::placeholder {
+        color: #b8c6d9;
+    }
+
+    .searchContainer form input:hover {
+        border: 1px solid #343a40;
+        box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+    }
+
+    .searchContainer form input:hover::placeholder {
+        color: #b8c6d9;
+    }
+
+    .searchContainer form input:active {
+        border: 1px solid #343a40;
+        box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+    }
+
+    .searchContainer form input:active::placeholder {
+        color: #b8c6d9;
+    }
+
+    .searchContainer form input:visited {
+        border: 1px solid #343a40;
+        box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+    }
+
+    .searchContainer form input:visited::placeholder {
+        color: #b8c6d9;
+    }
+
+    .searchContainer form input:link {
+        border: 1px solid #343a40;
+        box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+    }
+
+    .searchContainer form input:link::placeholder {
+        color: #b8c6d9;
+    }
+
+    .btn-group{
+        margin: 0 10px;
+    }
+
+    .btn-group .dropdown-menu{
+        width: 100%;
+    }
+
+    .btn-group .dropdown-menu .dropdown-item{
+        padding: 0;
+    }
+
+    .btn-group .dropdown-menu .dropdown-item .input-group .form-control{
+        width: 100%;
+    }
+
+    .btn-group .dropdown-menu .dropdown-item .input-group .form-control::placeholder{
+        color: #b8c6d9;
+    }
+
+    .btn-group .dropdown-menu .dropdown-item .input-group .form-control:focus{
+        border: 1px solid #343a40;
+        box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+    }
+
+    .btn-group .dropdown-menu .dropdown-item .input-group .form-control:focus::placeholder{
+        color: #b8c6d9;
+    }
+
+    .btn-group .dropdown-menu .dropdown-item .input-group .form-control:hover{
+        border: 1px solid #343a40;
+        box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+    }
+</style>
+
+<div class="main">
+    <div class="image">
+        <img src="https://www.incimages.com/uploaded_files/image/1920x1080/getty_649362670_395940.jpg" alt="Car Rental" />
+    </div>
+    <h1>Welcome to Our Car Rental Website</h1>
+    <p>We offer a wide selection of rental cars to meet your needs. Whether you're looking for a compact car for a city
+        trip or a spacious SUV for a family vacation, we've got you covered.</p>
+    <ul>
+        <div class="searchContainer">
+            <form class="location" role="search">
+                <input type="search" class="form-control form-control-dark text-bg-dark"
+                    placeholder="Localização de levantamento" aria-label="Search">
+            </form>
+        
+        @* Pickup date button with day picker *@
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Pickup Date
+            </button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item">
+                    <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1" />
+                        <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* Pickup time button with time picker *@
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Pickup Time
+            </button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item">
+                    <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker2" />
+                        <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Return Date
+            </button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item">
+                    <div class="input-group date" id="datetimepicker3" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker3" />
+                        <div class="input-group-append" data-target="#datetimepicker3" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+                Return Time
+            </button>
+            <div class="dropdown-menu">
+                <div class="dropdown-item">
+                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4" />
+                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-clock-o"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-secondary">
+                Search
+            </button>
+        </div>
+
+        </div>
+    </ul>
+</div>

@@ -1,0 +1,35 @@
+@model PWEB.Models.Reserva
+
+@{
+    ViewData["Title"] = "Reservas - Eliminar";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<h1>Gestão de Reservas</h1>
+<h4>Eliminar</h4>
+<br />
+<div>
+    <h4>Reserva</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataLevantamento)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataLevantamento)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataEntrega)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataEntrega)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
