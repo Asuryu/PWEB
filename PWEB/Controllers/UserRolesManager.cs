@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using PWEB_AulasP_2223.ViewModels;
 using PWEB.Models;
 using Microsoft.EntityFrameworkCore;
+using PWEB.Data;
+using System.Numerics;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -16,11 +18,13 @@ namespace PWEB.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ApplicationDbContext _context;
 
-        public UserRolesManagerController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UserRolesManagerController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -62,6 +66,7 @@ namespace PWEB.Controllers
                 manage.Selected = await _userManager.IsInRoleAsync(user, role.Name);
                 manageUserRolesViewModels.Add(manage);
             }
+            manageUserRolesViewModels.RemoveAll(role => (role.RoleName == "Gestor" || role.RoleName == "Funcionario"));
             return View(manageUserRolesViewModels);
         }
 
@@ -73,8 +78,14 @@ namespace PWEB.Controllers
             {
                 foreach (var role in model)
                 {
-                    if (role.Selected) await _userManager.AddToRoleAsync(user, role.RoleName);
-                    else await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+                    if (role.Selected)
+                    {
+                        await _userManager.AddToRoleAsync(user, role.RoleName);
+                    }
+                    else
+                    {
+                        await _userManager.RemoveFromRoleAsync(user, role.RoleName);
+                    }
                 }
             }
             return RedirectToAction("Index");
@@ -110,6 +121,12 @@ namespace PWEB.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        public bool ValidSwapRole(string name)
+        {
+            if (name == "Gestor" || name == "Funcionario") return false;
+            return true;
         }
     }
 }

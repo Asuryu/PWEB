@@ -20,7 +20,6 @@ namespace PWEB.Controllers
 
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
         public ReservasController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
@@ -29,61 +28,24 @@ namespace PWEB.Controllers
         }
 
 
-        public async Task<IActionResult> Index(bool? ativas, bool? ordenarAscendentemente)
+        public async Task<IActionResult> MyReservations()
         {
             ViewData["Title"] = "Lista de Reservas";
-
-            if (ativas != null) 
-            {
-                if(ordenarAscendentemente != null) // 1 1
-                {
-                    if (ordenarAscendentemente == true)
-                    {
-                        return View(await _context.Reservas.Where(c => c.SubscricaoAtiva == ativas)
-                            .OrderBy(s => s.Avaliacao)
-                            .ToListAsync());
-                    } else
-                    {
-                        return View(await _context.Reservas.Where(c => c.SubscricaoAtiva == ativas)
-                            .OrderByDescending(s => s.Avaliacao)
-                            .ToListAsync());
-                    }
-                } else // 1 0
-                {
-                    return View(await _context.Reservas.Where(c => c.SubscricaoAtiva == ativas)
-                        .ToListAsync());
-                }
-            } else
-            {
-                if(ordenarAscendentemente != null) // 0 1
-                {
-                    if (ordenarAscendentemente == true)
-                    {
-                        return View(await _context.Reservas
-                            .OrderBy(s => s.Avaliacao)
-                            .ToListAsync());
-                    }
-                    else
-                    {
-                        return View(await _context.Reservas
-                            .OrderByDescending(s => s.Avaliacao)
-                            .ToListAsync());
-                    }
-                } else // 0 0
-                {
-                    return View(await _context.Reservas.ToListAsync());
-                }
-            }
+            
+            return View(await _context.Reservas.ToListAsync());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string TextoAPesquisar)
+        public async Task<IActionResult> Index(bool? confirmadas)
         {
-            ViewData["Title"] = "Lista de Reservas";
+            ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
+            ViewData["ListaDeVeiculos"] = new SelectList(_context.Veiculos.ToList(), "Id", "Marca");
+            ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "Id");
 
-            if (TextoAPesquisar != null)
+            if (confirmadas != null)
             {
-                return View(await _context.Reservas.Where(c => c.Nome.Contains(TextoAPesquisar)).ToListAsync());
+                return View(await _context.Reservas.Where(c => c.Confirmada == confirmadas)
+                            .ToListAsync());
             }
             else
             {
@@ -223,5 +185,4 @@ namespace PWEB.Controllers
             return _context.Reservas.Any(e => e.Id == id);
         }
     }
-
 }
