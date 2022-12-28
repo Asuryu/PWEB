@@ -129,9 +129,8 @@ namespace PWEB.Controllers
                         ApplicationUser = defaultUser,
                         Empresa = empresa
                     };
-                    _context.Update(gestor);
+                    _context.Add(gestor);
                     empresa.Gestores.Add(gestor);
-                    _context.Update(empresa);
                     await _context.SaveChangesAsync();
                 }
 
@@ -215,6 +214,7 @@ namespace PWEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            Console.WriteLine(id);
             if (_context.Empresas == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Empresas'  is null.");
@@ -222,10 +222,6 @@ namespace PWEB.Controllers
             var empresa = await _context.Empresas.FindAsync(id);
             if (empresa != null)
             {
-                if(empresa.Veiculos.Count > 0)
-                {
-                    return Problem("Não é possível eliminar a empresa pois esta contém veículos.");
-                }
                 _context.Empresas.Remove(empresa);
             }
 

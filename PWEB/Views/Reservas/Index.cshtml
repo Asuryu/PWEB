@@ -1,0 +1,75 @@
+﻿@model IEnumerable<PWEB.Models.Reserva>
+
+@{
+    ViewData["Title"] = "Reservas";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>Gestão de Reservas</h1>
+
+<div class="column">
+    <div class="col-10">
+        Mostrar:
+        <a asp-action="Index" asp-controller="Reservas" asp-route-confirmadas="">Todas</a> |
+        <a asp-action="Index" asp-route-confirmadas="true">Confirmadas</a> |
+        <a asp-action="Index" asp-route-confirmadas="false">Por confirmar</a>
+    </div>
+    <div class="col-10">
+        <form method="post">
+            Pesquisa por categoria:
+            <select name="CategoriaId" asp-items="ViewBag.ListaDeCategorias"></select><br />
+            Pesquisa por veículo:
+            <select name="CategoriaId" asp-items="ViewBag.ListaDeVeiculos"></select><br />
+            Pesquisa por cliente:
+            <select name="CategoriaId" asp-items="ViewBag.ListaDeClientes"></select><br />
+            <input class="btn btn-primary" type="submit" value="Pesquisar" />
+        </form>
+    </div>
+    <br />
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                #
+            </th>
+            <th>
+                Data de Levantamento
+            </th>
+            <th>
+                Data de Entrega
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Confirmada)
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataLevantamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataEntrega)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Confirmada)
+            </td>
+            <td>
+                <a class="btn btn-success" asp-action="Confirm" asp-route-reservaId="@item.Id">Confirmar Reserva</a>
+                <a class="btn btn-danger" asp-action="Deny" asp-route-reservaId="@item.Id">Rejeitar Reserva</a>
+                <a class="btn btn-primary" asp-action="Deliver" asp-route-reservaId="@item.Id">Entregar Veículo</a>
+                <a class="btn btn-primary" asp-action="Receive" asp-route-reservaId="@item.Id">Receber Veículo</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
