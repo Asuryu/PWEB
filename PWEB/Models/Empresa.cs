@@ -15,7 +15,7 @@ namespace PWEB.Models
         public ICollection<Veiculo> Veiculos { get; set; }
         public ICollection<Gestor> Gestores { get; set; }
         public ICollection<Funcionario> Funcionarios { get; set; }
-        public ICollection<Reserva> Reservas { get; set; }
+        //public ICollection<Reserva> Reservas { get; set; }
 
     }
 }

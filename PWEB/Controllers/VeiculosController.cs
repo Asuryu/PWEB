@@ -127,6 +127,7 @@ namespace PWEB_AulasP_2223.Controllers
             
             ModelState.Remove(nameof(veiculo.Empresa));
             ModelState.Remove(nameof(veiculo.Categoria));
+            ModelState.Remove(nameof(veiculo.Reservas));
 
             if (ModelState.IsValid)
             {
@@ -169,6 +170,7 @@ namespace PWEB_AulasP_2223.Controllers
 
             ModelState.Remove(nameof(veiculo.Categoria));
             ModelState.Remove(nameof(veiculo.Empresa));
+            ModelState.Remove(nameof(veiculo.Reservas));
 
             if (ModelState.IsValid)
             {
@@ -225,7 +227,16 @@ namespace PWEB_AulasP_2223.Controllers
             if (veiculo != null)
             {
                 // TODO: verificar se o veiculo não tem reservas
+                var resultado = from c in _context.Reservas
+                                where c.VeiculoId == veiculo.Id
+                                select c;
+                if(resultado.Count() > 0)
+                {
+                    return Problem("O veículo não pôde ser removido pois existem reservas para o mesmo.");
+                }
                 _context.Veiculos.Remove(veiculo);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             
             await _context.SaveChangesAsync();

@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<PWEB.Models.Reserva>
 
 @{
-    ViewData["Title"] = "Reservas";
+    ViewData["Title"] = "Reservas - As Minhas Reservas";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
-<h1>Gestão de Reservas</h1>
+<h1>As Minhas Reservas</h1>
 
 <div class="column">
     <div class="col-10">
@@ -19,9 +19,9 @@
             Pesquisa por categoria:
             <select name="CategoriaId" asp-items="ViewBag.ListaDeCategorias"></select><br />
             Pesquisa por veículo:
-            <select name="VeiculoId" asp-items="ViewBag.ListaDeVeiculos"></select><br />
+            <select name="CategoriaId" asp-items="ViewBag.ListaDeVeiculos"></select><br />
             Pesquisa por cliente:
-            <select name="ClienteId" asp-items="ViewBag.ListaDeClientes"></select><br />
+            <select name="CategoriaId" asp-items="ViewBag.ListaDeClientes"></select><br />
             <input class="btn btn-primary" type="submit" value="Pesquisar" />
         </form>
     </div>
@@ -64,16 +64,8 @@
                 @Html.DisplayFor(modelItem => item.Confirmada)
             </td>
             <td>
-                @if (item.Confirmada)
-                {
-                    <a class="btn btn-success disabled" asp-action="Confirm" asp-route-reservaId="@item.Id">Confirmar Reserva</a>
-                    <a class="btn btn-danger disabled" asp-action="Deny" asp-route-reservaId="@item.Id">Rejeitar Reserva</a>
-                }
-                else
-                {
-                    <a class="btn btn-success" asp-action="Confirm" asp-route-reservaId="@item.Id">Confirmar Reserva</a>
-                    <a class="btn btn-danger" asp-action="Deny" asp-route-reservaId="@item.Id">Rejeitar Reserva</a>
-                }
+                <a class="btn btn-success" asp-action="Confirm" asp-route-reservaId="@item.Id">Confirmar Reserva</a>
+                <a class="btn btn-danger" asp-action="Deny" asp-route-reservaId="@item.Id">Rejeitar Reserva</a>
                 <a class="btn btn-primary" asp-action="Deliver" asp-route-reservaId="@item.Id">Entregar Veículo</a>
                 <a class="btn btn-primary" asp-action="Receive" asp-route-reservaId="@item.Id">Receber Veículo</a>
             </td>

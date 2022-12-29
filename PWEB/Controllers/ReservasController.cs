@@ -32,12 +32,12 @@ namespace PWEB.Controllers
         {
             ViewData["Title"] = "Lista de Reservas";
             
-            return View(await _context.Reservas.ToListAsync());
+            return View(await _context.Reservas.ToListAsync()); //TODO: mostrar só as do utilizador loggado
         }
 
-        [HttpPost]
         public async Task<IActionResult> Index(bool? confirmadas)
         {
+            ViewData["Title"] = "Lista de Reservas";
             ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
             ViewData["ListaDeVeiculos"] = new SelectList(_context.Veiculos.ToList(), "Id", "Marca");
             ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "Id");
@@ -51,92 +51,21 @@ namespace PWEB.Controllers
             {
                 return View(await _context.Reservas.ToListAsync());
             }
-        }
 
-        public IActionResult Create()
-        {
-            return View();
+            return View(await _context.Reservas.ToListAsync());
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,DataLevantamento,DataEntrega")] Reserva reserva)
+        public async Task<IActionResult> Index(int CategoriaId, int VeiculoId, int ClienteId)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(reserva);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(reserva);
-        }
+            ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
+            ViewData["ListaDeVeiculos"] = new SelectList(_context.Veiculos.ToList(), "Id", "Marca");
+            ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "Id");
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Reservas == null)
-            {
-                return NotFound();
-            }
-
-            var empresa = await _context.Reservas.FindAsync(id);
-            if (empresa == null)
-            {
-                return NotFound();
-            }
-            return View(empresa);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataLevantamento,DataEntrega")] Reserva reserva)
-        {
-            if (id != reserva.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(reserva);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReservaExists(reserva.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(reserva);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReservaExists(reserva.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(reserva);
+            var resultado = from c in _context.Reservas
+                            where c.Veiculo.CategoriaId == CategoriaId && c.VeiculoId == VeiculoId && c.ClienteId == ClienteId
+                            select c;
+            return View(resultado);
         }
 
         // GET: Categorias/Delete/5
@@ -178,6 +107,37 @@ namespace PWEB.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Confirm(int? reservaId)
+        {
+            var reserva = await _context.Reservas.FindAsync(reservaId);
+            if (reserva != null)
+            {
+                bool isConfirmed = reserva.Confirmada;
+                if (isConfirmed == false)
+                {
+                    reserva.Confirmada = true;
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Deny(int? reservaId)
+        {
+            var reserva = await _context.Reservas.FindAsync(reservaId);
+            if (reserva != null)
+            {
+                bool isConfirmed = reserva.Confirmada;
+                if (isConfirmed == true)
+                {
+                    reserva.Confirmada = false;
+                    _context.Reservas.Remove(reserva);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return RedirectToAction("Index");
         }
 
         private bool ReservaExists(int id)

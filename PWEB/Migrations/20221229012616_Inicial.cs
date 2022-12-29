@@ -253,15 +253,16 @@ namespace PWEB.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    ApplicationUserId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     EmpresaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Gestores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Gestores_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
+                        name: "FK_Gestores_AspNetUsers_ApplicationUserId1",
+                        column: x => x.ApplicationUserId1,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -283,8 +284,9 @@ namespace PWEB.Migrations
                     Localizacao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Custo = table.Column<int>(type: "int", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
-                    EmpresaId = table.Column<int>(type: "int", nullable: false)
+                    EmpresaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -299,8 +301,7 @@ namespace PWEB.Migrations
                         name: "FK_Veiculos_Empresas_EmpresaId",
                         column: x => x.EmpresaId,
                         principalTable: "Empresas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -312,8 +313,8 @@ namespace PWEB.Migrations
                     DataLevantamento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Confirmada = table.Column<bool>(type: "bit", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: true),
-                    EmpresaId = table.Column<int>(type: "int", nullable: true)
+                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    VeiculoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -322,12 +323,14 @@ namespace PWEB.Migrations
                         name: "FK_Reservas_Clientes_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Clientes",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Reservas_Empresas_EmpresaId",
-                        column: x => x.EmpresaId,
-                        principalTable: "Empresas",
-                        principalColumn: "Id");
+                        name: "FK_Reservas_Veiculos_VeiculoId",
+                        column: x => x.VeiculoId,
+                        principalTable: "Veiculos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -390,9 +393,9 @@ namespace PWEB.Migrations
                 column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Gestores_ApplicationUserId",
+                name: "IX_Gestores_ApplicationUserId1",
                 table: "Gestores",
-                column: "ApplicationUserId");
+                column: "ApplicationUserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Gestores_EmpresaId",
@@ -405,9 +408,9 @@ namespace PWEB.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_EmpresaId",
+                name: "IX_Reservas_VeiculoId",
                 table: "Reservas",
-                column: "EmpresaId");
+                column: "VeiculoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Veiculos_CategoriaId",
@@ -450,22 +453,22 @@ namespace PWEB.Migrations
                 name: "Reservas");
 
             migrationBuilder.DropTable(
-                name: "Veiculos");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "Clientes");
 
             migrationBuilder.DropTable(
+                name: "Veiculos");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Categorias");
 
             migrationBuilder.DropTable(
                 name: "Empresas");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

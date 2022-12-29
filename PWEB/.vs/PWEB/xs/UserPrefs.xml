@@ -1,65 +1,78 @@
 ﻿<Properties StartupConfiguration="{899D1E6F-F4FB-438E-A0D7-F5F8EA0EFB2B}|PWEB_AulasP_2223">
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="appsettings.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/FuncionariosController.cs">
     <Files>
-      <File FileName="Controllers/VeiculosController.cs" Line="93" Column="10" />
-      <File FileName="Views/Veiculos/Index.cshtml" Line="17" Column="81" />
+      <File FileName="Models/Empresa.cs" Line="18" Column="11" />
+      <File FileName="Controllers/ReservasController.cs" Line="66" Column="102" />
+      <File FileName="Models/Reserva.cs" Line="16" Column="18" />
+      <File FileName="Controllers/VeiculosController.cs" Line="234" Column="18" />
+      <File FileName="Models/Cliente.cs" Line="7" Column="26" />
+      <File FileName="Views/Veiculos/Index.cshtml" Line="1" Column="1" />
+      <File FileName="Models/ApplicationUser.cs" Line="9" Column="9" />
+      <File FileName="Controllers/UserRolesManager.cs" Line="28" Column="10" />
+      <File FileName="Views/Reservas/MyReservations.cshtml" Line="19" Column="1" />
+      <File FileName="Views/Shared/_Layout2.cshtml" Line="30" Column="144" />
+      <File FileName="Views/Shared/_LoginPartial.cshtml" Line="11" Column="55" />
+      <File FileName="Views/Home/Index.cshtml" Line="1" Column="1" />
       <File FileName="Views/Shared/_Layout.cshtml" Line="1" Column="1" />
-      <File FileName="Views/Shared/_Layout2.cshtml" Line="35" Column="127" />
-      <File FileName="Views/Veiculos/Create.cshtml" Line="53" Column="67" />
-      <File FileName="Views/Veiculos/Delete.cshtml" Line="55" Column="51" />
-      <File FileName="Views/Categorias/Delete.cshtml" Line="16" Column="9" />
-      <File FileName="Views/Veiculos/Edit.cshtml" Line="32" Column="37" />
-      <File FileName="Models/Categoria.cs" Line="12" Column="46" />
-      <File FileName="Views/Veiculos/Details.cshtml" Line="4" Column="34" />
-      <File FileName="Controllers/CategoriasController.cs" Line="27" Column="27" />
-      <File FileName="Views/Empresas/Edit.cshtml" Line="9" Column="1" />
-      <File FileName="Views/Empresas/Create.cshtml" Line="27" Column="13" />
-      <File FileName="Views/Categorias/Index.cshtml" Line="1" Column="1" />
-      <File FileName="Views/Empresas/Index.cshtml" Line="14" Column="1" />
-      <File FileName="Controllers/EmpresasController.cs" Line="79" Column="9" />
-      <File FileName="Views/Shared/_LoginPartial.cshtml" Line="1" Column="1" />
-      <File FileName="appsettings.json" Line="13" Column="1" />
-      <File FileName="Views/Home/Index.cshtml" Line="11" Column="1" NotebookId="1" />
-      <File FileName="Models/Empresa.cs" Line="20" Column="6" NotebookId="1" />
-      <File FileName="Areas/Identity/Pages/Account/Login.cshtml" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Areas/Identity/Pages/Account/Login.cshtml.cs" Line="92" Column="22" NotebookId="1" />
-      <File FileName="Models/Cliente.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Models/Gestor.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Views/Empresas/Delete.cshtml" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Models/Veiculo.cs" Line="9" Column="34" NotebookId="1" />
+      <File FileName="Models/Funcionario.cs" Line="14" Column="1" />
+      <File FileName="Models/Gestor.cs" Line="7" Column="1" />
+      <File FileName="Models/ErrorViewModel.cs" Line="1" Column="1" />
+      <File FileName="Models/Administrador.cs" Line="9" Column="2" />
+      <File FileName="Models/EntregaVeiculo.cs" Line="12" Column="47" />
+      <File FileName="Models/RecolhaVeiculo.cs" Line="6" Column="1" />
+      <File FileName="Models/Veiculo.cs" Line="20" Column="59" />
+      <File FileName="Models/Categoria.cs" Line="1" Column="1" />
+      <File FileName="Data/Inicializacao.cs" Line="46" Column="22" />
+      <File FileName="Controllers/EmpresasController.cs" Line="133" Column="50" />
+      <File FileName="Program.cs" Line="31" Column="1" />
+      <File FileName="Controllers/CategoriasController.cs" Line="161" Column="52" />
+      <File FileName="Views/Empresas/Index.cshtml" Line="29" Column="51" />
+      <File FileName="Views/Empresas/Edit.cshtml" Line="1" Column="1" />
+      <File FileName="Controllers/HomeController.cs" Line="1" Column="1" />
+      <File FileName="Views/Reservas/Index.cshtml" Line="19" Column="36" />
+      <File FileName="Views/Funcionarios/Index.cshtml" Line="1" Column="60" />
+      <File FileName="Views/UserRolesManager/Edit.cshtml" Line="1" Column="1" />
+      <File FileName="Views/UserRolesManager/Index.cshtml" Line="1" Column="1" />
+      <File FileName="Controllers/FuncionariosController.cs" Line="18" Column="15" />
+      <File FileName="ViewModels/GestoresViewModel.cs" Line="9" Column="43" />
+      <File FileName="ViewModels/UserRolesViewModel.cs" Line="17" Column="2" />
+      <File FileName="ViewModels/ManageUserRolesViewModel.cs" Line="1" Column="1" />
+      <File FileName="Views/Funcionarios/CreateFuncionario.cshtml" Line="1" Column="1" />
+      <File FileName="Migrations/20221229012616_Inicial.cs" Line="1" Column="1" />
+      <File FileName="Data/ApplicationDbContext.cs" Line="1" Column="1" />
+      <File FileName="Migrations/20221229014231_Fixe.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="PWEB" expanded="True">
             <Node name="PWEB" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="FuncionariosController.cs" selected="True" />
+              </Node>
               <Node name="Data" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="ViewModels" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Categorias" expanded="True" />
                 <Node name="Empresas" expanded="True" />
+                <Node name="Funcionarios" expanded="True" />
                 <Node name="Home" expanded="True" />
+                <Node name="Reservas" expanded="True" />
                 <Node name="Shared" expanded="True" />
                 <Node name="UserRolesManager" expanded="True" />
                 <Node name="Veiculos" expanded="True" />
               </Node>
-              <Node name="wwwroot" expanded="True">
-                <Node name="css" expanded="True" />
-              </Node>
-              <Node name="appsettings.json" selected="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

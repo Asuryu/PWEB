@@ -369,7 +369,7 @@ namespace PWEB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ClienteId")
+                    b.Property<int>("ClienteId")
                         .HasColumnType("int");
 
                     b.Property<bool>("Confirmada")
@@ -381,14 +381,14 @@ namespace PWEB.Migrations
                     b.Property<DateTime>("DataLevantamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("EmpresaId")
+                    b.Property<int>("VeiculoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
 
-                    b.HasIndex("EmpresaId");
+                    b.HasIndex("VeiculoId");
 
                     b.ToTable("Reservas");
                 });
@@ -543,13 +543,21 @@ namespace PWEB.Migrations
 
             modelBuilder.Entity("PWEB.Models.Reserva", b =>
                 {
-                    b.HasOne("PWEB.Models.Cliente", null)
+                    b.HasOne("PWEB.Models.Cliente", "Cliente")
                         .WithMany("Reservas")
-                        .HasForeignKey("ClienteId");
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("PWEB.Models.Empresa", null)
+                    b.HasOne("PWEB.Models.Veiculo", "Veiculo")
                         .WithMany("Reservas")
-                        .HasForeignKey("EmpresaId");
+                        .HasForeignKey("VeiculoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("Veiculo");
                 });
 
             modelBuilder.Entity("PWEB.Models.Veiculo", b =>
@@ -580,9 +588,12 @@ namespace PWEB.Migrations
 
                     b.Navigation("Gestores");
 
-                    b.Navigation("Reservas");
-
                     b.Navigation("Veiculos");
+                });
+
+            modelBuilder.Entity("PWEB.Models.Veiculo", b =>
+                {
+                    b.Navigation("Reservas");
                 });
 #pragma warning restore 612, 618
         }

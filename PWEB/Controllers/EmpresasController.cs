@@ -103,7 +103,7 @@ namespace PWEB.Controllers
             ModelState.Remove(nameof(empresa.Gestores));
             ModelState.Remove(nameof(empresa.Funcionarios));
             ModelState.Remove(nameof(empresa.Veiculos));
-            ModelState.Remove(nameof(empresa.Reservas));
+            //ModelState.Remove(nameof(empresa.Reservas));
 
             if (ModelState.IsValid)
             {
@@ -129,7 +129,7 @@ namespace PWEB.Controllers
                         ApplicationUser = defaultUser,
                         Empresa = empresa
                     };
-                    _context.Add(gestor);
+                    _context.Update(gestor);
                     empresa.Gestores.Add(gestor);
                     await _context.SaveChangesAsync();
                 }
@@ -166,7 +166,7 @@ namespace PWEB.Controllers
             ModelState.Remove(nameof(empresa.Gestores));
             ModelState.Remove(nameof(empresa.Funcionarios));
             ModelState.Remove(nameof(empresa.Veiculos));
-            ModelState.Remove(nameof(empresa.Reservas));
+            //ModelState.Remove(nameof(empresa.Reservas));
 
             if (ModelState.IsValid)
             {
