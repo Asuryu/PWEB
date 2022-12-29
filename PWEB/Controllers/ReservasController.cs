@@ -40,7 +40,7 @@ namespace PWEB.Controllers
             ViewData["Title"] = "Lista de Reservas";
             ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
             ViewData["ListaDeVeiculos"] = new SelectList(_context.Veiculos.ToList(), "Id", "Marca");
-            ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "Id");
+            ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "PrimeiroNome");
 
             if (confirmadas != null)
             {
@@ -60,7 +60,7 @@ namespace PWEB.Controllers
         {
             ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
             ViewData["ListaDeVeiculos"] = new SelectList(_context.Veiculos.ToList(), "Id", "Marca");
-            ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "Id");
+            ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "PrimeiroNome");
 
             var resultado = from c in _context.Reservas
                             where c.Veiculo.CategoriaId == CategoriaId && c.VeiculoId == VeiculoId && c.ClienteId == ClienteId

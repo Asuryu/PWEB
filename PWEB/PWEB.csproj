@@ -23,7 +23,6 @@
     <None Remove="Data\" />
     <None Remove="Views\Veiculos\" />
     <None Remove="Views\Reservas\" />
-    <None Remove="Views\Funcionarios\" />
   </ItemGroup>
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
@@ -64,7 +63,6 @@
     <Folder Include="Data\" />
     <Folder Include="Views\Veiculos\" />
     <Folder Include="Views\Reservas\" />
-    <Folder Include="Views\Funcionarios\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="ViewModels\UserRolesViewModel.cs">

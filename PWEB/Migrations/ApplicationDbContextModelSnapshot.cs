@@ -159,24 +159,6 @@ namespace PWEB.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("PWEB.Models.Administrador", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Administradores");
-                });
-
             modelBuilder.Entity("PWEB.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -184,6 +166,9 @@ namespace PWEB.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
+
+                    b.Property<string>("CargoNaEmpresa")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -198,6 +183,9 @@ namespace PWEB.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("EmpresaId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -242,6 +230,8 @@ namespace PWEB.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmpresaId");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -274,24 +264,6 @@ namespace PWEB.Migrations
                     b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("PWEB.Models.Cliente", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.ToTable("Clientes");
-                });
-
             modelBuilder.Entity("PWEB.Models.Empresa", b =>
                 {
                     b.Property<int>("Id")
@@ -315,52 +287,6 @@ namespace PWEB.Migrations
                     b.ToTable("Empresas");
                 });
 
-            modelBuilder.Entity("PWEB.Models.Funcionario", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("EmpresaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("EmpresaId");
-
-                    b.ToTable("Funcionarios");
-                });
-
-            modelBuilder.Entity("PWEB.Models.Gestor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("EmpresaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("EmpresaId");
-
-                    b.ToTable("Gestores");
-                });
-
             modelBuilder.Entity("PWEB.Models.Reserva", b =>
                 {
                     b.Property<int>("Id")
@@ -371,6 +297,10 @@ namespace PWEB.Migrations
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ClienteId1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("Confirmada")
                         .HasColumnType("bit");
@@ -386,7 +316,7 @@ namespace PWEB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
+                    b.HasIndex("ClienteId1");
 
                     b.HasIndex("VeiculoId");
 
@@ -489,63 +419,20 @@ namespace PWEB.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PWEB.Models.Administrador", b =>
+            modelBuilder.Entity("PWEB.Models.ApplicationUser", b =>
                 {
-                    b.HasOne("PWEB.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("PWEB.Models.Cliente", b =>
-                {
-                    b.HasOne("PWEB.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.Navigation("ApplicationUser");
-                });
-
-            modelBuilder.Entity("PWEB.Models.Funcionario", b =>
-                {
-                    b.HasOne("PWEB.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("PWEB.Models.Empresa", "Empresa")
-                        .WithMany("Funcionarios")
-                        .HasForeignKey("EmpresaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
-
-                    b.Navigation("Empresa");
-                });
-
-            modelBuilder.Entity("PWEB.Models.Gestor", b =>
-                {
-                    b.HasOne("PWEB.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("PWEB.Models.Empresa", "Empresa")
-                        .WithMany("Gestores")
-                        .HasForeignKey("EmpresaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ApplicationUser");
+                        .WithMany("GestoresFuncionarios")
+                        .HasForeignKey("EmpresaId");
 
                     b.Navigation("Empresa");
                 });
 
             modelBuilder.Entity("PWEB.Models.Reserva", b =>
                 {
-                    b.HasOne("PWEB.Models.Cliente", "Cliente")
+                    b.HasOne("PWEB.Models.ApplicationUser", "Cliente")
                         .WithMany("Reservas")
-                        .HasForeignKey("ClienteId")
+                        .HasForeignKey("ClienteId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -577,16 +464,14 @@ namespace PWEB.Migrations
                     b.Navigation("Empresa");
                 });
 
-            modelBuilder.Entity("PWEB.Models.Cliente", b =>
+            modelBuilder.Entity("PWEB.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Reservas");
                 });
 
             modelBuilder.Entity("PWEB.Models.Empresa", b =>
                 {
-                    b.Navigation("Funcionarios");
-
-                    b.Navigation("Gestores");
+                    b.Navigation("GestoresFuncionarios");
 
                     b.Navigation("Veiculos");
                 });

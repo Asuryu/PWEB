@@ -39,12 +39,6 @@ namespace PWEB_AulasP_2223.Data
             var user = await userManager.FindByEmailAsync(defaultUser.Email);
             if (user == null)
             {
-
-                /**var admin = new Administrador
-                {
-                    ApplicationUser = defaultUser
-                };**/
-                //context.Add(admin);
                 await context.SaveChangesAsync();
                 await userManager.CreateAsync(defaultUser, "Is3C..00");
                 await userManager.AddToRoleAsync(defaultUser, Roles.Administrador.ToString());

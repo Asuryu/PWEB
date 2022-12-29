@@ -4,14 +4,12 @@ using System.Xml.Linq;
 
 namespace PWEB_AulasP_2223.ViewModels
 {
-    public class GestoresViewModel
+    public class NovoGestorFuncViewModel
     {
-        public string UserId { get; set; }
         public string PrimeiroNome { get; set; }
         public string UltimoNome { get; set; }
-        public string Email { get; set; }
-        public string NomeEmpresa { get; set; }
-        public bool LockedAccount { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public string CargoNaEmpresa { get; set; }
     }
 }
 

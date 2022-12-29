@@ -13,8 +13,7 @@ namespace PWEB.Models
         public bool SubscricaoAtiva { get; set; }
 
         public ICollection<Veiculo> Veiculos { get; set; }
-        public ICollection<Gestor> Gestores { get; set; }
-        public ICollection<Funcionario> Funcionarios { get; set; }
+        public ICollection<ApplicationUser> GestoresFuncionarios { get; set; }
         //public ICollection<Reserva> Reservas { get; set; }
 
     }

@@ -9,7 +9,7 @@ namespace PWEB.Models
         public string Observacoes { get; set; }
 
         public int FuncionarioId { get; set; }
-        public Funcionario Funcionario { get; set; }
+        public ApplicationUser Funcionario { get; set; }
 
         //public byte[] Imagens { get; set; }
     }
