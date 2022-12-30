@@ -14,7 +14,7 @@ namespace PWEB.Models
         public int? ReservaId { get; set; }
         public Reserva Reserva { get; set; }
 
-        public virtual ICollection<Fotografia> Fotografias { get; set; }
+        public ICollection<Fotografia> Fotografias { get; set; }
 
     }
 }

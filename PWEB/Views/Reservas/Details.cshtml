@@ -1,0 +1,141 @@
+﻿@model PWEB.ViewModels.ReservaDetailsViewModel
+
+@{
+    ViewData["Title"] = "Reservas - Detalhes";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>Gestão de Reservas</h1>
+
+<div>
+    <h4>Detalhes</h4>
+    <hr />
+    <dl class="row">
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+        <br />
+        <br />
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reserva.DataLevantamento)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reserva.DataLevantamento)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reserva.DataEntrega)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reserva.DataEntrega)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Reserva.Confirmada)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Reserva.Confirmada)
+        </dd>
+
+        <br />
+        <br />
+        <br />
+        <h4>Veículo</h4>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Veiculo.Marca)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Veiculo.Marca)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Veiculo.Modelo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Veiculo.Modelo)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Veiculo.Localizacao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Veiculo.Localizacao)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Veiculo.Custo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Veiculo.Custo)€
+        </dd>
+
+        @if (Model.Entrega != null)
+        {
+            <br />
+            <br />
+            <br />
+            <h4>Entrega</h4>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Entrega.NrKmsVeiculos)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Entrega.NrKmsVeiculos)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Entrega.Observacoes)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Entrega.Observacoes)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Entrega.Danos)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Entrega.Danos)
+            </dd>
+        }
+        @if (Model.Recolha != null)
+        {
+            <br />
+            <br />
+            <br />
+            <h4>Recolha</h4>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Recolha.NrKmsVeiculos)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Recolha.NrKmsVeiculos)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Recolha.Observacoes)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Recolha.Observacoes)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Recolha.Danos)
+            </dt>
+            <dt class="col-sm-10">
+                @Html.DisplayFor(model => model.Recolha.Danos)
+            </dt>
+        }
+
+        @if (Model.Recolha.Fotografias.Count > 0)
+        {
+            <br />
+            <br />
+            <br />
+            <h4>Fotografias</h4>
+            <div>
+                @foreach (var fotografia in Model.Recolha.Fotografias)
+                {
+
+                    <img style="width: 200px;" src="data:image/*;base64,@(Convert.ToBase64String(fotografia.Data))" />
+                }
+            </div>
+            <br />
+        }
+
+
+
+    </dl>
+    <br />
+    <br />
+</div>

@@ -15,6 +15,8 @@ using PWEB.Models;
 
 namespace PWEB.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class EmpresasController : Controller
     {
 

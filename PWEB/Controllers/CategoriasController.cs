@@ -15,6 +15,8 @@ using PWEB_AulasP_2223.Models;
 
 namespace PWEB_AulasP_2223.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Administrator")]
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;

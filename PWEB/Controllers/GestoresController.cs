@@ -18,6 +18,8 @@ using PWEB_AulasP_2223.ViewModels;
 
 namespace PWEB_AulasP_2223.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Gestor")]
     public class GestoresController : Controller
     {
         private readonly ApplicationDbContext _context;

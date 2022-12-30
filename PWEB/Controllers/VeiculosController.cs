@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,19 +16,26 @@ using PWEB_AulasP_2223.Models;
 
 namespace PWEB_AulasP_2223.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Funcionario,Gestor")]
     public class VeiculosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public VeiculosController(ApplicationDbContext context)
+        public VeiculosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Categorias
         public async Task<IActionResult> Index(bool? ativos, bool? ordenarAscendentemente)
         {
+            var current_user = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
+            Empresa Empresa = await _context.Empresas.FindAsync(current_user.EmpresaId);
+            ViewBag.NomeEmpresa = Empresa.Nome;
 
             if (ativos != null)
             {

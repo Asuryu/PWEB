@@ -21,6 +21,7 @@ namespace PWEB.Data
         public DbSet<ApplicationUser> Utilizadores { get; set; }
         public DbSet<EntregaVeiculo> Entregas { get; set; }
         public DbSet<RecolhaVeiculo> Recolhas { get; set; }
+        public DbSet<Fotografia> Fotografias { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
