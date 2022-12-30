@@ -43,20 +43,20 @@ namespace PWEB_AulasP_2223.Controllers
                 {
                     if (ordenarAscendentemente == true)
                     {
-                        return View(await _context.Veiculos.Where(c => c.Ativo == ativos)
+                        return View(await _context.Veiculos.Where(c => c.Ativo == ativos && c.EmpresaId == Empresa.Id)
                             .OrderBy(s => s.Custo)
                             .ToListAsync());
                     }
                     else
                     {
-                        return View(await _context.Veiculos.Where(c => c.Ativo == ativos)
+                        return View(await _context.Veiculos.Where(c => c.Ativo == ativos && c.EmpresaId == Empresa.Id)
                             .OrderByDescending(s => s.Custo)
                             .ToListAsync());
                     }
                 }
                 else // 1 0
                 {
-                    return View(await _context.Veiculos.Where(c => c.Ativo == ativos)
+                    return View(await _context.Veiculos.Where(c => c.Ativo == ativos && c.EmpresaId == Empresa.Id)
                         .ToListAsync());
                 }
             }
@@ -66,20 +66,20 @@ namespace PWEB_AulasP_2223.Controllers
                 {
                     if (ordenarAscendentemente == true)
                     {
-                        return View(await _context.Veiculos
+                        return View(await _context.Veiculos.Where(c => c.EmpresaId == Empresa.Id)
                             .OrderBy(s => s.Custo)
                             .ToListAsync());
                     }
                     else
                     {
-                        return View(await _context.Veiculos
+                        return View(await _context.Veiculos.Where(c => c.EmpresaId == Empresa.Id)
                             .OrderByDescending(s => s.Custo)
                             .ToListAsync());
                     }
                 }
                 else // 0 0
                 {
-                    return View(await _context.Veiculos.ToListAsync());
+                    return View(await _context.Veiculos.Where(c => c.EmpresaId == Empresa.Id).ToListAsync());
                 }
             }
         }
@@ -87,14 +87,17 @@ namespace PWEB_AulasP_2223.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string TextoAPesquisar, int CategoriaId)
         {
+            var current_user = await _userManager.GetUserAsync(HttpContext.User);
             ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
+            Empresa Empresa = await _context.Empresas.FindAsync(current_user.EmpresaId);
+            ViewBag.NomeEmpresa = Empresa.Nome;
 
             if (string.IsNullOrWhiteSpace(TextoAPesquisar))
                 return View(_context.Veiculos.Where(c => c.CategoriaId == CategoriaId));
             else
             {
                 var resultado = from c in _context.Veiculos
-                                where c.Marca.Contains(TextoAPesquisar) || c.Modelo.Contains(TextoAPesquisar) || c.Localizacao.Contains(TextoAPesquisar) || c.Estado.Contains(TextoAPesquisar) && c.CategoriaId == CategoriaId
+                                where c.EmpresaId == Empresa.Id && (c.Marca.Contains(TextoAPesquisar) || c.Modelo.Contains(TextoAPesquisar) || c.Localizacao.Contains(TextoAPesquisar) || c.Estado.Contains(TextoAPesquisar) && c.CategoriaId == CategoriaId)
                                 select c;
                 return View(resultado);
             }
@@ -137,9 +140,17 @@ namespace PWEB_AulasP_2223.Controllers
             ModelState.Remove(nameof(veiculo.Categoria));
             ModelState.Remove(nameof(veiculo.Reservas));
 
+            // get current user
+            var current_user = await _userManager.GetUserAsync(HttpContext.User);
+            // get empresa by id
+            Empresa Empresa = await _context.Empresas.FindAsync(current_user.EmpresaId);
+            veiculo.Empresa = Empresa;
+            veiculo.EmpresaId = Empresa.Id;
+
             if (ModelState.IsValid)
             {
                 _context.Add(veiculo);
+                current_user.Empresa.Veiculos.Add(veiculo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
