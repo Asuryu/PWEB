@@ -6,9 +6,12 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <div style="display: flex; flex-direction: row;">
+        <div style="display: flex; flex-direction: row; align-items: center;">
         <li class="nav-item">
-            <a class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Olá @User.Identity?.Name!</a>
+            <a data-tippy-content="@User.Identity.Name" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index">
+                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" style="height: 35px; width: 35px; border-radius: 50%;"/>
+            </a>
+              
         </li>
         <li class="nav-item" style="margin-left: 15px;">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -24,4 +27,8 @@
             <a class="btn btn-outline-light me-2" asp-area="Identity" asp-page="/Account/Login">Entrar</a>
         </li>
     }
+
+    <script>
+        tippy('[data-tippy-content]');
+    </script>
 </ul>

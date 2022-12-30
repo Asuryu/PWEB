@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using PWEB.Data;
 using PWEB.Models;
 using PWEB_AulasP_2223.Models;
 using System;
+using System.Numerics;
+
 namespace PWEB_AulasP_2223.Data
 {
     public enum Roles
@@ -13,7 +17,7 @@ namespace PWEB_AulasP_2223.Data
     }
     public static class Inicializacao
     {
-        public static async Task CriaDadosIniciais(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public static async Task CriaDadosIniciais(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             //Adicionar default Roles
             await roleManager.CreateAsync(new IdentityRole(Roles.Cliente.ToString()));
@@ -35,6 +39,7 @@ namespace PWEB_AulasP_2223.Data
             var user = await userManager.FindByEmailAsync(defaultUser.Email);
             if (user == null)
             {
+                await context.SaveChangesAsync();
                 await userManager.CreateAsync(defaultUser, "Is3C..00");
                 await userManager.AddToRoleAsync(defaultUser, Roles.Administrador.ToString());
             }

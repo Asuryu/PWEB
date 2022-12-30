@@ -7,7 +7,15 @@ namespace PWEB.Models
         public int NrKmsVeiculos { get; set; }
         public bool Danos { get; set; }
         public string Observacoes { get; set; }
-        //public byte[] Imagens { get; set; }
+
+        public int FuncionarioId { get; set; }
+        public ApplicationUser Funcionario { get; set; }
+
+        public int? ReservaId { get; set; }
+        public Reserva Reserva { get; set; }
+
+        public ICollection<Fotografia> Fotografias { get; set; }
+
     }
 }
 

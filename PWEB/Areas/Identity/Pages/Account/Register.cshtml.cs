@@ -143,21 +143,13 @@ namespace PWEB.Areas.Identity.Pages.Account
                 user.PrimeiroNome = Input.PrimeiroNome;
                 user.UltimoNome = Input.UltimoNome;
                 user.DataNascimento = Input.DataNascimento;
+                user.Reservas = new List<Reserva>();
                 await _userManager.UpdateAsync(user);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 await _userManager.AddToRoleAsync(user, "Cliente");
 
                 if (result.Succeeded)
                 {
-
-                    var cliente = new Cliente
-                    {
-                        ApplicationUser = user,
-                        Reservas = new List<Reserva>()
-                    };
-                    _context.Update(cliente);
-                    await _context.SaveChangesAsync();
-
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

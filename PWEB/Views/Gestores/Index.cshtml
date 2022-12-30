@@ -1,0 +1,74 @@
+﻿@model IEnumerable<PWEB_AulasP_2223.ViewModels.GestoresViewModel>
+
+@{
+    ViewData["Title"] = "Área de Gestão";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+    <h1>Área de Gestão</h1>
+    <h sttyle="font-size: 18px;">@ViewBag.NomeEmpresa</h>
+ <br /><br />
+    <a class="btn btn-primary" asp-action="Create">Adicionar novo membro</a>
+    <br /><br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Primeiro Nome
+                </th>
+                <th>
+                    Último Nome
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Empresa
+                </th>
+                <th>
+                    Ações
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PrimeiroNome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UltimoNome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NomeEmpresa)
+                    </td>
+                    <td>
+                        @if (item.LockedAccount)
+                        {
+                            <a class="btn btn-success" asp-action="Enable" asp-route-userId="@item.UserId">Ativar utilizador</a>
+                            <a class="btn btn-warning disabled" asp-action="Disable" asp-route-userId="@item.UserId">Desativar utilizador</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-success disabled" asp-action="Enable" asp-route-userId="@item.UserId">Ativar utilizador</a>
+                            <a class="btn btn-warning" asp-action="Disable" asp-route-userId="@item.UserId">Desativar utilizador</a>
+                        }
+                        @if (item.CanDelete)
+                        {
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-userId="@item.UserId">Apagar utilizador</a>
+                        }
+                        else
+                        {
+                            <a class="btn btn-danger disabled" asp-action="Delete" asp-route-userId="@item.UserId">Apagar utilizador</a>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

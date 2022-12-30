@@ -15,6 +15,8 @@ using PWEB.Models;
 
 namespace PWEB.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class EmpresasController : Controller
     {
 
@@ -100,10 +102,9 @@ namespace PWEB.Controllers
         public async Task<IActionResult> Create([Bind("Id,Nome,Avaliacao,SubscricaoAtiva")] Empresa empresa)
         {
 
-            ModelState.Remove(nameof(empresa.Gestores));
-            ModelState.Remove(nameof(empresa.Funcionarios));
+            ModelState.Remove(nameof(empresa.GestoresFuncionarios));
             ModelState.Remove(nameof(empresa.Veiculos));
-            ModelState.Remove(nameof(empresa.Reservas));
+            //ModelState.Remove(nameof(empresa.Reservas));
 
             if (ModelState.IsValid)
             {
@@ -117,20 +118,17 @@ namespace PWEB.Controllers
                     PrimeiroNome = "Gestor",
                     UltimoNome = empresa.Nome,
                     EmailConfirmed = true,
-                    PhoneNumberConfirmed = true
+                    PhoneNumberConfirmed = true,
+                    EmpresaId = empresa.Id,
+                    Empresa = empresa,
+                    CargoNaEmpresa = "Gestor"
                 };
                 var user = await _userManager.FindByEmailAsync(defaultUser.Email);
                 if (user == null)
                 {
                     await _userManager.CreateAsync(defaultUser, "ISEC_PWeb_2022!");
                     await _userManager.AddToRoleAsync(defaultUser, "Gestor");
-                    var gestor = new Gestor
-                    {
-                        ApplicationUser = defaultUser,
-                        Empresa = empresa
-                    };
-                    _context.Add(gestor);
-                    empresa.Gestores.Add(gestor);
+                    empresa.GestoresFuncionarios.Add(defaultUser);
                     await _context.SaveChangesAsync();
                 }
 
@@ -163,10 +161,9 @@ namespace PWEB.Controllers
                 return NotFound();
             }
 
-            ModelState.Remove(nameof(empresa.Gestores));
-            ModelState.Remove(nameof(empresa.Funcionarios));
+            ModelState.Remove(nameof(empresa.GestoresFuncionarios));
             ModelState.Remove(nameof(empresa.Veiculos));
-            ModelState.Remove(nameof(empresa.Reservas));
+            //ModelState.Remove(nameof(empresa.Reservas));
 
             if (ModelState.IsValid)
             {
@@ -214,7 +211,6 @@ namespace PWEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Console.WriteLine(id);
             if (_context.Empresas == null)
             {
                 return Problem("Entity set 'ApplicationDbContext.Empresas'  is null.");

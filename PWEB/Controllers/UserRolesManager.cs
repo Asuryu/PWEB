@@ -9,11 +9,15 @@ using PWEB.Models;
 using Microsoft.EntityFrameworkCore;
 using PWEB.Data;
 using System.Numerics;
+using Microsoft.AspNetCore.Authorization;
+using PWEB_AulasP_2223.Data;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace PWEB.Controllers
 {
+    [Authorize]
+    [Authorize(Roles = "Administrador")]
     public class UserRolesManagerController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

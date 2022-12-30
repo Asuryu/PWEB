@@ -72,5 +72,9 @@
     <Compile Update="ViewModels\ManageUserRolesViewModel.cs">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="ViewModels\UserRolesViewModel %28copiar%29.cs">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Compile>
   </ItemGroup>
 </Project>
