@@ -49,6 +49,7 @@ namespace PWEB_AulasP_2223.Controllers
                 userRolesViewModel.UserId = user.Id;
                 userRolesViewModel.NomeEmpresa = Empresa.Nome;
                 userRolesViewModel.LockedAccount = await _userManager.IsLockedOutAsync(user);
+                userRolesViewModel.CanDelete = current_user.Id != user.Id;
                 ViewBag.NomeEmpresa = Empresa.Nome;
                 listaUtilizadores.Add(userRolesViewModel);
             }
@@ -78,16 +79,19 @@ namespace PWEB_AulasP_2223.Controllers
             {
 
                 var current_user = await _userManager.GetUserAsync(HttpContext.User);
+                var empresa = await _context.Empresas.FindAsync(current_user.EmpresaId);
+
+                var email = novoMembro.PrimeiroNome.ToLower() + "_" + novoMembro.UltimoNome.ToLower() + "@" + empresa.Nome.ToLower() + ".com";
                 var defaultUser = new ApplicationUser
                 {
-                    UserName = novoMembro.PrimeiroNome.ToLower() + "_" + novoMembro.UltimoNome.ToLower() + "@" + current_user.Empresa.Nome.ToLower() + ".com",
-                    Email = novoMembro.PrimeiroNome.ToLower() + "_" + novoMembro.UltimoNome.ToLower() + "@" + current_user.Empresa.Nome.ToLower() + ".com",
+                    UserName = email,
+                    Email = email,
                     PrimeiroNome = novoMembro.PrimeiroNome,
                     UltimoNome = novoMembro.UltimoNome,
                     EmailConfirmed = true,
                     PhoneNumberConfirmed = true,
                     EmpresaId = current_user.EmpresaId,
-                    Empresa = current_user.Empresa,
+                    Empresa = empresa,
                     CargoNaEmpresa = novoMembro.CargoNaEmpresa
                 };
                 var user = await _userManager.FindByEmailAsync(defaultUser.Email);
@@ -95,7 +99,7 @@ namespace PWEB_AulasP_2223.Controllers
                 {
                     await _userManager.CreateAsync(defaultUser, "ISEC_PWeb_2022!");
                     await _userManager.AddToRoleAsync(defaultUser, novoMembro.CargoNaEmpresa);
-                    current_user.Empresa.GestoresFuncionarios.Add(defaultUser);
+                    empresa.GestoresFuncionarios.Add(defaultUser);
                     if (novoMembro.CargoNaEmpresa == "Gestor")
                     {
                         _context.Gestores.Add(defaultUser);
@@ -103,7 +107,7 @@ namespace PWEB_AulasP_2223.Controllers
                     {
                         _context.Funcionarios.Add(defaultUser);
                     }
-                    await _context.SaveChangesAsync();
+                    //await _context.SaveChangesAsync();
                 }
 
                 return RedirectToAction(nameof(Index));
@@ -158,6 +162,9 @@ namespace PWEB_AulasP_2223.Controllers
                 {
                     return Problem("Não podes eliminar a tua própria conta.");
                 }
+
+
+
                 _context.Gestores.Remove(gestor);
             }
 

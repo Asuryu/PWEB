@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PWEB.Data;
 using PWEB.Models;
+using PWEB.ViewModels;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -138,6 +139,52 @@ namespace PWEB.Controllers
                 }
             }
             return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Deliver(int? reservaId)
+        {
+            var reserva = await _context.Reservas.FindAsync(reservaId);
+            if (reserva != null)
+            {
+                ViewBag.Veiculo = reserva.Veiculo;
+                ViewBag.ReservaId = reserva.Id;
+                return View();
+            }
+            return Problem("Não foi possível encontrar esse veículo.");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Deliver(int? reservaId, [Bind("NrKmsVeiculo, Danos, Observacoes")] EntregaViewModel entrega)
+        {
+            if (ModelState.IsValid)
+            {
+                Console.WriteLine(reservaId);
+                var reserva = await _context.Reservas.FindAsync(reservaId);
+                 
+                EntregaVeiculo novaEntrega = new EntregaVeiculo
+                {
+                    NrKmsVeiculos = entrega.NrKmsVeiculo,
+                    Danos = entrega.Danos,
+                    Observacoes = entrega.Observacoes,
+                    Funcionario = await _userManager.GetUserAsync(User),
+                    Reserva = reserva
+                };
+
+                // add new entrega to database
+                _context.Entregas.Add(novaEntrega);
+                await _context.SaveChangesAsync();
+
+                reserva.EntregaVeiculo = novaEntrega;
+                reserva.EntregaVeiculoId = novaEntrega.Id;
+
+
+                _context.Reservas.Update(reserva);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+
+            }
+            return View(entrega);
         }
 
         private bool ReservaExists(int id)

@@ -15,5 +15,6 @@ namespace PWEB.Models
         public int? EmpresaId { get; set; }
         public Empresa Empresa { get; set; }
         public string? CargoNaEmpresa { get; set; }
+
     }
 }

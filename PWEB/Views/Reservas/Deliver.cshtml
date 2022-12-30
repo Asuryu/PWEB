@@ -1,0 +1,44 @@
+@model PWEB.ViewModels.EntregaViewModel
+
+@{
+    ViewData["Title"] = "Reservas - Entregar Veículo";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1>Reservas</h1>
+
+<h4>Entregar Veículo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Deliver">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- include reservaId -->
+            <input type="hidden" asp-for="ReservaId" value="@ViewBag.ReservaId"/>
+
+            <div class="form-group">
+                <label asp-for="NrKmsVeiculo" class="control-label"></label>
+                <input asp-for="NrKmsVeiculo" class="form-control" />
+                <span asp-validation-for="NrKmsVeiculo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Observacoes" class="control-label"></label>
+                <input asp-for="Observacoes" class="form-control" />
+                <span asp-validation-for="Observacoes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Danos" /> @Html.DisplayNameFor(model => model.Danos)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

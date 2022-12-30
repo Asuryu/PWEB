@@ -12,6 +12,7 @@ namespace PWEB_AulasP_2223.ViewModels
         public string Email { get; set; }
         public string NomeEmpresa { get; set; }
         public bool LockedAccount { get; set; }
+        public bool CanDelete { get; set; }
     }
 }
 

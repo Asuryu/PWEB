@@ -11,6 +11,9 @@ namespace PWEB.Models
 		public int FuncionarioId { get; set; }
 		public ApplicationUser Funcionario { get; set; }
 
+        public int? ReservaId { get; set; }
+        public Reserva Reserva { get; set; }
+
     }
 }
 

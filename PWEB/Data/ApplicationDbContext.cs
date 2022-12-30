@@ -19,10 +19,28 @@ namespace PWEB.Data
         public DbSet<ApplicationUser> Funcionarios { get; set; }
         public DbSet<ApplicationUser> Clientes { get; set; }
         public DbSet<ApplicationUser> Utilizadores { get; set; }
+        public DbSet<EntregaVeiculo> Entregas { get; set; }
+        public DbSet<RecolhaVeiculo> Recolhas { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RecolhaVeiculo>()
+                .HasOne(r => r.Reserva)
+                .WithOne(e => e.RecolhaVeiculo)
+                .HasForeignKey<RecolhaVeiculo>(r => r.ReservaId);
+
+            // uma entrega tem uma reserva (foreign key)
+            modelBuilder.Entity<EntregaVeiculo>()
+                .HasOne(e => e.Reserva)
+                .WithOne(r => r.EntregaVeiculo)
+                .HasForeignKey<EntregaVeiculo>(e => e.ReservaId);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

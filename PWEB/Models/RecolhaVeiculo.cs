@@ -11,7 +11,11 @@ namespace PWEB.Models
         public int FuncionarioId { get; set; }
         public ApplicationUser Funcionario { get; set; }
 
-        //public byte[] Imagens { get; set; }
+        public int? ReservaId { get; set; }
+        public Reserva Reserva { get; set; }
+
+        public virtual ICollection<Fotografia> Fotografias { get; set; }
+
     }
 }
 
