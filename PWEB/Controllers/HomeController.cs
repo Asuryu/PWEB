@@ -1,8 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using PWEB.Data;
 using PWEB_AulasP_2223.Data;
 using PWEB_AulasP_2223.Models;
 using System.Diagnostics;
+using PWEB_AulasP_2223.ViewModels;
 
 namespace PWEB_AulasP_2223.Controllers
 {
@@ -23,34 +28,38 @@ namespace PWEB_AulasP_2223.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-
-        public IActionResult QuemSomos()
-        {
-            return View();
-        }
-
-
-        public IActionResult Cursos()
-        {
-            return View();
-        }
-
-
-        public IActionResult Contactos()
-        {
-            return View();
-        }
-
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Search([Bind("Location,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
+        {
+            ViewData["Veiculos"] = new SelectList(_context.Veiculos, "Id", "Marca");
+
+
+            if (search.PickupDateAndTime > search.ReturnDateAndTime)
+                ModelState.AddModelError("PickupDateAndTime", "A data de inicio não pode ser maior que a data de fim");
+
+            var Veiculo = _context.Veiculos.Find(search.VeiculoId);
+            if (Veiculo == null)
+            {
+                ModelState.AddModelError("VeiculoId", "Veículo inválido");
+            }
+
+            if (ModelState.IsValid)
+            {
+                Veiculo x = new Veiculo();
+                x.PickupDateAndTime = search.PickupDateAndTime;
+                x.ReturnDateAndTime = search.ReturnDateAndTime;
+                x.Location = search.Location;
+                return View("PedidoConfirmacao", x);
+            }
+
+            return View("search", search);
         }
     }
 }
