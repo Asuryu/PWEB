@@ -54,15 +54,14 @@ namespace PWEB.Controllers
 
             if (confirmadas != null)
             {
-                return View(await _context.Reservas.Where(c => c.Confirmada == confirmadas)
+                return View(await _context.Reservas.Where(c => c.Confirmada == confirmadas && c.EmpresaId == Empresa.Id)
                             .ToListAsync());
             }
             else
             {
-                return View(await _context.Reservas.ToListAsync());
+                return View(await _context.Reservas.Where(c => c.EmpresaId == Empresa.Id).ToListAsync());
             }
 
-            return View(await _context.Reservas.ToListAsync());
         }
 
         [Authorize]
@@ -74,8 +73,12 @@ namespace PWEB.Controllers
             ViewData["ListaDeVeiculos"] = new SelectList(_context.Veiculos.ToList(), "Id", "Marca");
             ViewData["ListaDeClientes"] = new SelectList(_context.Clientes.ToList(), "Id", "PrimeiroNome");
 
+            var current_user = await _userManager.GetUserAsync(HttpContext.User);
+            Empresa Empresa = await _context.Empresas.FindAsync(current_user.EmpresaId);
+            ViewBag.NomeEmpresa = Empresa.Nome;
+
             var resultado = from c in _context.Reservas
-                            where c.Veiculo.CategoriaId == CategoriaId && c.VeiculoId == VeiculoId && c.ClienteId == ClienteId
+                            where c.Veiculo.CategoriaId == CategoriaId && c.VeiculoId == VeiculoId && c.ClienteId == ClienteId && c.EmpresaId == Empresa.Id
                             select c;
             return View(resultado);
         }

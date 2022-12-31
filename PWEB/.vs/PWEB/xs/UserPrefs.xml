@@ -1,19 +1,21 @@
 ﻿<Properties StartupConfiguration="{899D1E6F-F4FB-438E-A0D7-F5F8EA0EFB2B}|PWEB_AulasP_2223">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UserRolesManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ReservasController.cs">
     <Files>
-      <File FileName="Controllers/ReservasController.cs" Line="34" Column="39" IsPinned="True" />
+      <File FileName="Controllers/ReservasController.cs" Line="28" Column="10" IsPinned="True" />
       <File FileName="ViewModels/ReservaDetailsViewModel.cs" />
-      <File FileName="Models/Reserva.cs" />
+      <File FileName="Models/Reserva.cs" Line="18" Column="20" />
       <File FileName="Models/RecolhaVeiculo.cs" />
       <File FileName="Models/Fotografia.cs" />
       <File FileName="Models/EntregaVeiculo.cs" />
       <File FileName="Models/Empresa.cs" />
       <File FileName="Views/Veiculos/Index.cshtml" />
       <File FileName="Models/ApplicationUser.cs" />
-      <File FileName="Controllers/UserRolesManager.cs" Line="20" Column="41" />
+      <File FileName="Controllers/UserRolesManager.cs" />
       <File FileName="Views/Reservas/MyReservations.cshtml" />
       <File FileName="Views/Shared/_LoginPartial.cshtml" />
       <File FileName="Views/Home/Index.cshtml" />
@@ -22,7 +24,7 @@
       <File FileName="Models/Categoria.cs" />
       <File FileName="Data/Inicializacao.cs" />
       <File FileName="Program.cs" />
-      <File FileName="Controllers/CategoriasController.cs" Line="19" Column="38" />
+      <File FileName="Controllers/CategoriasController.cs" />
       <File FileName="Views/Empresas/Index.cshtml" />
       <File FileName="Views/Empresas/Edit.cshtml" />
       <File FileName="Controllers/HomeController.cs" />
@@ -34,7 +36,7 @@
       <File FileName="Data/ApplicationDbContext.cs" />
       <File FileName="Areas/Identity/Pages/Account/Register.cshtml.cs" />
       <File FileName="Views/Veiculos/Create.cshtml" />
-      <File FileName="Controllers/EmpresasController.cs" Line="19" Column="36" />
+      <File FileName="Controllers/EmpresasController.cs" />
       <File FileName="ViewModels/NovoMembroViewModel.cs" />
       <File FileName="Controllers/GestoresController.cs" />
       <File FileName="Views/Gestores/Index.cshtml" />
@@ -54,8 +56,9 @@
       <File FileName="Migrations/20221230164708_Fotografias.cs" />
       <File FileName="wwwroot/css/bootstrap.css" />
       <File FileName="Views/Categorias/Details.cshtml" />
-      <File FileName="Views/Shared/_Layout2.cshtml" />
+      <File FileName="Views/Shared/_Layout2.cshtml" Line="1" Column="2" />
       <File FileName="Views/Shared/_Layout.cshtml.css" />
+      <File FileName="Migrations/20221231020933_ReservaEmpresa.cs" Line="45" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -63,7 +66,7 @@
           <Node name="PWEB" expanded="True">
             <Node name="PWEB" expanded="True">
               <Node name="Controllers" expanded="True">
-                <Node name="UserRolesManager.cs" selected="True" />
+                <Node name="ReservasController.cs" selected="True" />
               </Node>
               <Node name="Data" expanded="True" />
               <Node name="Models" expanded="True" />
@@ -81,8 +84,6 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
 </Properties>

@@ -15,7 +15,10 @@ namespace PWEB.Models
         public int VeiculoId { get; set; }
         public Veiculo Veiculo { get; set; }
 
-		public int? RecolhaVeiculoId { get; set; }
+        public int? EmpresaId { get; set; }
+        public Empresa Empresa { get; set; }
+
+        public int? RecolhaVeiculoId { get; set; }
         public RecolhaVeiculo RecolhaVeiculo { get; set; }
 
         public int? EntregaVeiculoId { get; set; }
