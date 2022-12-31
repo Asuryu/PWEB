@@ -53,6 +53,35 @@ namespace PWEB.Controllers
         }
 
         [Authorize]
+        [Authorize(Roles = "Cliente")]
+        public async Task<IActionResult> DetailsClient(int? reservaId)
+        {
+            var reserva = await _context.Reservas.FirstOrDefaultAsync(m => m.Id == reservaId);
+            var veiculo = await _context.Veiculos.FirstOrDefaultAsync(m => m.Id == reserva.VeiculoId);
+            var recolha = await _context.Recolhas.FirstOrDefaultAsync(m => m.Id == reserva.RecolhaVeiculoId);
+            var entrega = await _context.Entregas.FirstOrDefaultAsync(m => m.Id == reserva.EntregaVeiculoId);
+            if (recolha != null)
+            {
+                var fotos = await _context.Fotografias.Where(m => m.RecolhaVeiculoId == recolha.Id).ToListAsync();
+                recolha.Fotografias = fotos;
+            }
+            // get cliente object from reserva.clienteId
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(m => m.Id == reserva.ClienteId);
+
+            var viewModel = new ReservaDetailsViewModel
+            {
+                Reserva = reserva,
+                Cliente = cliente,
+                Veiculo = veiculo,
+                Funcionario = null,
+                Recolha = recolha,
+                Entrega = entrega
+            };
+
+            return View(viewModel);
+        }
+
+        [Authorize]
         [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Index(bool? confirmadas)
         {
@@ -91,7 +120,7 @@ namespace PWEB.Controllers
             ViewBag.NomeEmpresa = Empresa.Nome;
 
             var resultado = from c in _context.Reservas
-                            where c.Veiculo.CategoriaId == CategoriaId && c.VeiculoId == VeiculoId && c.ClienteId == ClienteId && c.EmpresaId == Empresa.Id
+                            where (c.Veiculo.CategoriaId == CategoriaId || c.VeiculoId == VeiculoId || c.ClienteId == ClienteId) && c.EmpresaId == Empresa.Id
                             select c;
             return View(resultado);
         }
@@ -254,12 +283,18 @@ namespace PWEB.Controllers
             var veiculo = await _context.Veiculos.FirstOrDefaultAsync(m => m.Id == reserva.VeiculoId);
             var recolha = await _context.Recolhas.FirstOrDefaultAsync(m => m.Id == reserva.RecolhaVeiculoId);
             var entrega = await _context.Entregas.FirstOrDefaultAsync(m => m.Id == reserva.EntregaVeiculoId);
-            var fotos = await _context.Fotografias.Where(m => m.RecolhaVeiculoId == recolha.Id).ToListAsync();
-            recolha.Fotografias = fotos;
+            if (recolha != null)
+            {
+                var fotos = await _context.Fotografias.Where(m => m.RecolhaVeiculoId == recolha.Id).ToListAsync();
+                recolha.Fotografias = fotos;
+            }
+            // get cliente object from reserva.clienteId
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(m => m.Id == reserva.ClienteId);
+
             var viewModel = new ReservaDetailsViewModel
             {
                 Reserva = reserva,
-                Cliente = null,
+                Cliente = cliente,
                 Veiculo = veiculo,
                 Funcionario = null,
                 Recolha = recolha,

@@ -93,11 +93,11 @@ namespace PWEB_AulasP_2223.Controllers
             ViewBag.NomeEmpresa = Empresa.Nome;
 
             if (string.IsNullOrWhiteSpace(TextoAPesquisar))
-                return View(_context.Veiculos.Where(c => c.CategoriaId == CategoriaId));
+                return View(_context.Veiculos.Where(c => c.CategoriaId == CategoriaId && c.EmpresaId == Empresa.Id));
             else
             {
                 var resultado = from c in _context.Veiculos
-                                where c.EmpresaId == Empresa.Id && (c.Marca.Contains(TextoAPesquisar) || c.Modelo.Contains(TextoAPesquisar) || c.Localizacao.Contains(TextoAPesquisar) || c.Estado.Contains(TextoAPesquisar) && c.CategoriaId == CategoriaId)
+                                where c.EmpresaId == Empresa.Id && (c.Marca.Contains(TextoAPesquisar) || c.Modelo.Contains(TextoAPesquisar) || c.Localizacao.Contains(TextoAPesquisar) || c.Estado.Contains(TextoAPesquisar)) && c.CategoriaId == CategoriaId
                                 select c;
                 return View(resultado);
             }
