@@ -1,14 +1,15 @@
 ﻿<Properties StartupConfiguration="{899D1E6F-F4FB-438E-A0D7-F5F8EA0EFB2B}|PWEB_AulasP_2223">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ReservasController.cs">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.PWEB PreferredExecutionTarget="/System/Volumes/Preboot/Cryptexes/App/System/Applications/Safari.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/HomeController.cs">
     <Files>
-      <File FileName="Controllers/ReservasController.cs" Line="28" Column="10" IsPinned="True" />
+      <File FileName="Controllers/ReservasController.cs" Line="24" Column="56" IsPinned="True" />
       <File FileName="ViewModels/ReservaDetailsViewModel.cs" />
-      <File FileName="Models/Reserva.cs" Line="18" Column="20" />
+      <File FileName="Models/Reserva.cs" />
       <File FileName="Models/RecolhaVeiculo.cs" />
       <File FileName="Models/Fotografia.cs" />
       <File FileName="Models/EntregaVeiculo.cs" />
@@ -27,7 +28,7 @@
       <File FileName="Controllers/CategoriasController.cs" />
       <File FileName="Views/Empresas/Index.cshtml" />
       <File FileName="Views/Empresas/Edit.cshtml" />
-      <File FileName="Controllers/HomeController.cs" />
+      <File FileName="Controllers/HomeController.cs" Line="47" Column="18" />
       <File FileName="Views/Reservas/Index.cshtml" />
       <File FileName="Views/UserRolesManager/Edit.cshtml" />
       <File FileName="Views/UserRolesManager/Index.cshtml" />
@@ -56,18 +57,16 @@
       <File FileName="Migrations/20221230164708_Fotografias.cs" />
       <File FileName="wwwroot/css/bootstrap.css" />
       <File FileName="Views/Categorias/Details.cshtml" />
-      <File FileName="Views/Shared/_Layout2.cshtml" Line="1" Column="2" />
+      <File FileName="Views/Shared/_Layout2.cshtml" />
       <File FileName="Views/Shared/_Layout.cshtml.css" />
-      <File FileName="Migrations/20221231020933_ReservaEmpresa.cs" Line="45" Column="2" />
+      <File FileName="Migrations/20221231020933_ReservaEmpresa.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="PWEB" expanded="True">
             <Node name="PWEB" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="ReservasController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Data" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="ViewModels" expanded="True" />
@@ -85,5 +84,4 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
 </Properties>

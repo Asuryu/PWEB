@@ -164,21 +164,18 @@ namespace PWEB_AulasP_2223.Controllers
                 {
                     return Problem("Não podes eliminar a tua própria conta.");
                 }
-
-                // PROBLEMA GRAVE: não dá para comparar o id do gestor com o id do funcionário
-                // porque o id do gestor é do tipo string e o id do funcionário é do tipo int.
                 
-                // var recolhas = _context.Recolhas.Where(r => r.FuncionarioId == userId).ToList();
-                // if (recolhas.Count > 0)
-                // {
-                //     return Problem("Não podes eliminar este gestor porque existem recolhas associadas a ele.");
-                // }
+                var recolhas = _context.Recolhas.Where(r => r.FuncionarioId == gestor.Id).ToList();
+                if (recolhas.Count > 0)
+                {
+                    return Problem("Não podes eliminar este gestor porque existem recolhas associadas a ele.");
+                }
 
-                // var entregas = _context.Entregas.Where(e => e.FuncionarioId == userId).ToList();
-                // if (entregas.Count > 0)
-                // {
-                //     return Problem("Não podes eliminar este gestor porque existem entregas associadas a ele.");
-                // }
+                var entregas = _context.Entregas.Where(r => r.FuncionarioId == gestor.Id).ToList();
+                if (recolhas.Count > 0)
+                {
+                    return Problem("Não podes eliminar este gestor porque existem entregas associadas a ele.");
+                }
 
                 _context.Gestores.Remove(gestor);
                 await _context.SaveChangesAsync();
@@ -187,7 +184,24 @@ namespace PWEB_AulasP_2223.Controllers
             var funcionario = await _context.Funcionarios.FindAsync(userId);
             if (funcionario != null)
             {
-                _context.Gestores.Remove(funcionario);
+                if (current_user.Id == funcionario.Id)
+                {
+                    return Problem("Não podes eliminar a tua própria conta.");
+                }
+
+                var recolhas = _context.Recolhas.Where(r => r.FuncionarioId == funcionario.Id).ToList();
+                if (recolhas.Count > 0)
+                {
+                    return Problem("Não podes eliminar este funcionário porque existem recolhas associadas a ele.");
+                }
+
+                var entregas = _context.Entregas.Where(r => r.FuncionarioId == funcionario.Id).ToList();
+                if (recolhas.Count > 0)
+                {
+                    return Problem("Não podes eliminar este funcionário porque existem entregas associadas a ele.");
+                }
+
+                _context.Funcionarios.Remove(funcionario);
                 await _context.SaveChangesAsync();
             }
 

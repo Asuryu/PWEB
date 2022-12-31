@@ -191,6 +191,12 @@ namespace PWEB_AulasP_2223.Controllers
             ModelState.Remove(nameof(veiculo.Empresa));
             ModelState.Remove(nameof(veiculo.Reservas));
 
+            var current_user = await _userManager.GetUserAsync(HttpContext.User);
+            // get empresa by id
+            Empresa Empresa = await _context.Empresas.FindAsync(current_user.EmpresaId);
+            veiculo.Empresa = Empresa;
+            veiculo.EmpresaId = Empresa.Id;
+
             if (ModelState.IsValid)
             {
                 Console.WriteLine(ModelState.Keys.Count());

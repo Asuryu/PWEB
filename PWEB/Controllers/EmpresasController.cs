@@ -188,7 +188,8 @@ namespace PWEB.Controllers
             return View(empresa);
         }
 
-        // GET: Categorias/Delete/5
+        [Authorize]
+        [Authorize(Roles = "Funcionario,Gestor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Empresas == null)
@@ -206,7 +207,8 @@ namespace PWEB.Controllers
             return View(empresa);
         }
 
-        // POST: Categorias/Delete/5
+        [Authorize]
+        [Authorize(Roles = "Funcionario,Gestor")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -218,6 +220,29 @@ namespace PWEB.Controllers
             var empresa = await _context.Empresas.FindAsync(id);
             if (empresa != null)
             {
+                if(empresa.Veiculos.Count > 0)
+                {
+                    return Problem("Não é possível eliminar a empresa pois esta contém veículos.");
+                }
+
+                // delete all users from this company (funcionario and gestor)
+                var users = await _userManager.GetUsersInRoleAsync("Gestor");
+                foreach (var user in users)
+                {
+                    if (user.EmpresaId == empresa.Id)
+                    {
+                        await _userManager.DeleteAsync(user);
+                    }
+                }
+                users = await _userManager.GetUsersInRoleAsync("Funcionario");
+                foreach (var user in users)
+                {
+                    if (user.EmpresaId == empresa.Id)
+                    {
+                        await _userManager.DeleteAsync(user);
+                    }
+                }
+
                 _context.Empresas.Remove(empresa);
             }
 

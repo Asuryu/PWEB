@@ -8,7 +8,7 @@ namespace PWEB.Models
         public bool Danos { get; set; }
         public string Observacoes { get; set; }
 
-        public int FuncionarioId { get; set; }
+        public string FuncionarioId { get; set; }
         public ApplicationUser Funcionario { get; set; }
 
         public int? ReservaId { get; set; }

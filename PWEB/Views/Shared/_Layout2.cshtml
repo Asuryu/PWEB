@@ -32,7 +32,7 @@
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        
+
                         // get list of user roles
                         var roles = await UserLog.GetRolesAsync(await UserLog.GetUserAsync(User));
                         // check if user is in the role
@@ -56,6 +56,7 @@
                         if (roles.Contains("Cliente"))
                         {
                             <li><a class="nav-link text-white" asp-area="" asp-controller="Reservas" asp-action="MyReservations">As Minhas Reservas</a></li>
+                            <li><a class="nav-link text-white" asp-area="" asp-controller="Reservas" asp-action="ReservationsHistory">Histórico de Reservas</a></li>
                         }
                     }
                 </ul>
