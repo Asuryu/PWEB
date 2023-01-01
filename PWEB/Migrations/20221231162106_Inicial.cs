@@ -233,9 +233,9 @@ namespace PWEB.Migrations
                     DataLevantamento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DataEntrega = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Confirmada = table.Column<bool>(type: "bit", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
-                    ClienteId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ClienteId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     VeiculoId = table.Column<int>(type: "int", nullable: false),
+                    EmpresaId = table.Column<int>(type: "int", nullable: true),
                     RecolhaVeiculoId = table.Column<int>(type: "int", nullable: true),
                     EntregaVeiculoId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -243,11 +243,16 @@ namespace PWEB.Migrations
                 {
                     table.PrimaryKey("PK_Reservas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Reservas_AspNetUsers_ClienteId1",
-                        column: x => x.ClienteId1,
+                        name: "FK_Reservas_AspNetUsers_ClienteId",
+                        column: x => x.ClienteId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reservas_Empresas_EmpresaId",
+                        column: x => x.EmpresaId,
+                        principalTable: "Empresas",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reservas_Veiculos_VeiculoId",
                         column: x => x.VeiculoId,
@@ -265,16 +270,15 @@ namespace PWEB.Migrations
                     NrKmsVeiculos = table.Column<int>(type: "int", nullable: false),
                     Danos = table.Column<bool>(type: "bit", nullable: false),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FuncionarioId = table.Column<int>(type: "int", nullable: false),
-                    FuncionarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FuncionarioId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReservaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Entregas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Entregas_AspNetUsers_FuncionarioId1",
-                        column: x => x.FuncionarioId1,
+                        name: "FK_Entregas_AspNetUsers_FuncionarioId",
+                        column: x => x.FuncionarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -294,16 +298,15 @@ namespace PWEB.Migrations
                     NrKmsVeiculos = table.Column<int>(type: "int", nullable: false),
                     Danos = table.Column<bool>(type: "bit", nullable: false),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FuncionarioId = table.Column<int>(type: "int", nullable: false),
-                    FuncionarioId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    FuncionarioId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ReservaId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Recolhas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recolhas_AspNetUsers_FuncionarioId1",
-                        column: x => x.FuncionarioId1,
+                        name: "FK_Recolhas_AspNetUsers_FuncionarioId",
+                        column: x => x.FuncionarioId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -315,7 +318,7 @@ namespace PWEB.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Fotografia",
+                name: "Fotografias",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -323,16 +326,17 @@ namespace PWEB.Migrations
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Extensao = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Data = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    RecolhaVeiculoId = table.Column<int>(type: "int", nullable: true)
+                    RecolhaVeiculoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Fotografia", x => x.Id);
+                    table.PrimaryKey("PK_Fotografias", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Fotografia_Recolhas_RecolhaVeiculoId",
+                        name: "FK_Fotografias_Recolhas_RecolhaVeiculoId",
                         column: x => x.RecolhaVeiculoId,
                         principalTable: "Recolhas",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -380,9 +384,9 @@ namespace PWEB.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Entregas_FuncionarioId1",
+                name: "IX_Entregas_FuncionarioId",
                 table: "Entregas",
-                column: "FuncionarioId1");
+                column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Entregas_ReservaId",
@@ -392,14 +396,14 @@ namespace PWEB.Migrations
                 filter: "[ReservaId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Fotografia_RecolhaVeiculoId",
-                table: "Fotografia",
+                name: "IX_Fotografias_RecolhaVeiculoId",
+                table: "Fotografias",
                 column: "RecolhaVeiculoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recolhas_FuncionarioId1",
+                name: "IX_Recolhas_FuncionarioId",
                 table: "Recolhas",
-                column: "FuncionarioId1");
+                column: "FuncionarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recolhas_ReservaId",
@@ -409,9 +413,14 @@ namespace PWEB.Migrations
                 filter: "[ReservaId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reservas_ClienteId1",
+                name: "IX_Reservas_ClienteId",
                 table: "Reservas",
-                column: "ClienteId1");
+                column: "ClienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reservas_EmpresaId",
+                table: "Reservas",
+                column: "EmpresaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reservas_VeiculoId",
@@ -450,7 +459,7 @@ namespace PWEB.Migrations
                 name: "Entregas");
 
             migrationBuilder.DropTable(
-                name: "Fotografia");
+                name: "Fotografias");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

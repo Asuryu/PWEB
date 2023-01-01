@@ -35,7 +35,7 @@ namespace PWEB_AulasP_2223.Controllers
         }
 
 
-        [HttpPost]
+        /**[HttpPost]
         public async Task<IActionResult> Search([Bind("Location,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
         {
             ViewData["Veiculos"] = new SelectList(_context.Veiculos, "Id", "Marca");
@@ -61,6 +61,6 @@ namespace PWEB_AulasP_2223.Controllers
             }
 
             return View("search", search);
-        }
+        }**/
     }
 }

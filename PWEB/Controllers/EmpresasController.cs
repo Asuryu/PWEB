@@ -97,6 +97,8 @@ namespace PWEB.Controllers
             return View();
         }
 
+        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Nome,Avaliacao,SubscricaoAtiva")] Empresa empresa)
@@ -152,6 +154,8 @@ namespace PWEB.Controllers
             return View(empresa);
         }
 
+        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Avaliacao,SubscricaoAtiva")] Empresa empresa)
@@ -188,7 +192,8 @@ namespace PWEB.Controllers
             return View(empresa);
         }
 
-        // GET: Categorias/Delete/5
+        [Authorize]
+        [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Empresas == null)
@@ -206,7 +211,8 @@ namespace PWEB.Controllers
             return View(empresa);
         }
 
-        // POST: Categorias/Delete/5
+        [Authorize]
+        [Authorize(Roles = "Administrador")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -218,6 +224,35 @@ namespace PWEB.Controllers
             var empresa = await _context.Empresas.FindAsync(id);
             if (empresa != null)
             {
+
+                // obter veículos da empresa
+                var veiculos = await _context.Veiculos
+                    .Where(v => v.EmpresaId == empresa.Id)
+                    .ToListAsync();
+
+                if(veiculos.Count > 0)
+                {
+                    return Problem("Não é possível eliminar a empresa pois esta contém veículos.");
+                }
+
+                // delete all users from this company (funcionario and gestor)
+                var users = await _userManager.GetUsersInRoleAsync("Gestor");
+                foreach (var user in users)
+                {
+                    if (user.EmpresaId == empresa.Id)
+                    {
+                        await _userManager.DeleteAsync(user);
+                    }
+                }
+                users = await _userManager.GetUsersInRoleAsync("Funcionario");
+                foreach (var user in users)
+                {
+                    if (user.EmpresaId == empresa.Id)
+                    {
+                        await _userManager.DeleteAsync(user);
+                    }
+                }
+
                 _context.Empresas.Remove(empresa);
             }
 

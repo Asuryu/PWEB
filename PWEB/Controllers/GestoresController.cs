@@ -149,49 +149,24 @@ namespace PWEB_AulasP_2223.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: Categorias/Delete/5
+
         public async Task<IActionResult> Delete(string? userId)
         {
-            var current_user = await _userManager.GetUserAsync(HttpContext.User);
-            if (_context.Gestores == null)
+            
+            // get user
+            var user = await _userManager.FindByIdAsync(userId);
+
+            var entregas = await _context.Entregas.Where(e => e.FuncionarioId == userId).ToListAsync();
+            var recolhas = await _context.Recolhas.Where(r => r.FuncionarioId == userId).ToListAsync();
+            
+            if (entregas.Count == 0 && recolhas.Count == 0)
             {
-                return Problem("Entity set 'ApplicationDbContext.Gestores'  is null.");
-            }
-            var gestor = await _context.Gestores.FindAsync(userId);
-            if (gestor != null)
-            {
-                if(current_user.Id == gestor.Id)
-                {
-                    return Problem("Não podes eliminar a tua própria conta.");
-                }
-
-                // PROBLEMA GRAVE: não dá para comparar o id do gestor com o id do funcionário
-                // porque o id do gestor é do tipo string e o id do funcionário é do tipo int.
-                
-                // var recolhas = _context.Recolhas.Where(r => r.FuncionarioId == userId).ToList();
-                // if (recolhas.Count > 0)
-                // {
-                //     return Problem("Não podes eliminar este gestor porque existem recolhas associadas a ele.");
-                // }
-
-                // var entregas = _context.Entregas.Where(e => e.FuncionarioId == userId).ToList();
-                // if (entregas.Count > 0)
-                // {
-                //     return Problem("Não podes eliminar este gestor porque existem entregas associadas a ele.");
-                // }
-
-                _context.Gestores.Remove(gestor);
-                await _context.SaveChangesAsync();
+                await _userManager.DeleteAsync(user);
+                return RedirectToAction("Index");
             }
 
-            var funcionario = await _context.Funcionarios.FindAsync(userId);
-            if (funcionario != null)
-            {
-                _context.Gestores.Remove(funcionario);
-                await _context.SaveChangesAsync();
-            }
+            return Problem("O utilizador não pode ser eliminado porque tem entregas ou recolhas associadas.");
 
-            return RedirectToAction(nameof(Index));
         }
 
     }

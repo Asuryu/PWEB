@@ -35,8 +35,50 @@ namespace PWEB.Controllers
         public async Task<IActionResult> MyReservations()
         {
             ViewData["Title"] = "Lista de Reservas";
-            
-            return View(await _context.Reservas.ToListAsync()); //TODO: mostrar só as do utilizador loggado
+
+            var current_user = await _userManager.GetUserAsync(HttpContext.User);
+            return View(await _context.Reservas
+                .Where(c => c.ClienteId == current_user.Id)
+                .ToListAsync());
+        }
+
+        [Authorize]
+        [Authorize(Roles = "Cliente")]
+        public async Task<IActionResult> ReservationsHistory()
+        {
+            ViewData["Title"] = "Lista de Reservas";
+
+            var current_user = await _userManager.GetUserAsync(HttpContext.User);
+            return View(await _context.Reservas.Where(c => c.ClienteId == current_user.Id).ToListAsync());
+        }
+
+        [Authorize]
+        [Authorize(Roles = "Cliente")]
+        public async Task<IActionResult> DetailsClient(int? reservaId)
+        {
+            var reserva = await _context.Reservas.FirstOrDefaultAsync(m => m.Id == reservaId);
+            var veiculo = await _context.Veiculos.FirstOrDefaultAsync(m => m.Id == reserva.VeiculoId);
+            var recolha = await _context.Recolhas.FirstOrDefaultAsync(m => m.Id == reserva.RecolhaVeiculoId);
+            var entrega = await _context.Entregas.FirstOrDefaultAsync(m => m.Id == reserva.EntregaVeiculoId);
+            if (recolha != null)
+            {
+                var fotos = await _context.Fotografias.Where(m => m.RecolhaVeiculoId == recolha.Id).ToListAsync();
+                recolha.Fotografias = fotos;
+            }
+            // get cliente object from reserva.clienteId
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(m => m.Id == reserva.ClienteId);
+
+            var viewModel = new ReservaDetailsViewModel
+            {
+                Reserva = reserva,
+                Cliente = cliente,
+                Veiculo = veiculo,
+                Funcionario = null,
+                Recolha = recolha,
+                Entrega = entrega
+            };
+
+            return View(viewModel);
         }
 
         [Authorize]
@@ -67,7 +109,7 @@ namespace PWEB.Controllers
         [Authorize]
         [Authorize(Roles = "Funcionario,Gestor")]
         [HttpPost]
-        public async Task<IActionResult> Index(int CategoriaId, int VeiculoId, int ClienteId)
+        public async Task<IActionResult> Index(int CategoriaId, int VeiculoId, string ClienteId)
         {
             ViewData["ListaDeCategorias"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
             ViewData["ListaDeVeiculos"] = new SelectList(_context.Veiculos.ToList(), "Id", "Marca");
@@ -78,52 +120,9 @@ namespace PWEB.Controllers
             ViewBag.NomeEmpresa = Empresa.Nome;
 
             var resultado = from c in _context.Reservas
-                            where c.Veiculo.CategoriaId == CategoriaId && c.VeiculoId == VeiculoId && c.ClienteId == ClienteId && c.EmpresaId == Empresa.Id
+                            where (c.Veiculo.CategoriaId == CategoriaId || c.VeiculoId == VeiculoId || c.ClienteId == ClienteId) && c.EmpresaId == Empresa.Id
                             select c;
             return View(resultado);
-        }
-
-        [Authorize]
-        [Authorize(Roles = "Funcionario,Gestor")]
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Empresas == null)
-            {
-                return NotFound();
-            }
-
-            var empresa = await _context.Empresas
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (empresa == null)
-            {
-                return NotFound();
-            }
-
-            return View(empresa);
-        }
-
-        [Authorize]
-        [Authorize(Roles = "Funcionario,Gestor")]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Empresas == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Empresas'  is null.");
-            }
-            var empresa = await _context.Empresas.FindAsync(id);
-            if (empresa != null)
-            {
-                if(empresa.Veiculos.Count > 0)
-                {
-                    return Problem("Não é possível eliminar a empresa pois esta contém veículos.");
-                }
-                _context.Empresas.Remove(empresa);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         [Authorize]
@@ -151,7 +150,7 @@ namespace PWEB.Controllers
             if (reserva != null)
             {
                 bool isConfirmed = reserva.Confirmada;
-                if (isConfirmed == true)
+                if (isConfirmed != true)
                 {
                     reserva.Confirmada = false;
                     _context.Reservas.Remove(reserva);
@@ -284,12 +283,18 @@ namespace PWEB.Controllers
             var veiculo = await _context.Veiculos.FirstOrDefaultAsync(m => m.Id == reserva.VeiculoId);
             var recolha = await _context.Recolhas.FirstOrDefaultAsync(m => m.Id == reserva.RecolhaVeiculoId);
             var entrega = await _context.Entregas.FirstOrDefaultAsync(m => m.Id == reserva.EntregaVeiculoId);
-            var fotos = await _context.Fotografias.Where(m => m.RecolhaVeiculoId == recolha.Id).ToListAsync();
-            recolha.Fotografias = fotos;
+            if (recolha != null)
+            {
+                var fotos = await _context.Fotografias.Where(m => m.RecolhaVeiculoId == recolha.Id).ToListAsync();
+                recolha.Fotografias = fotos;
+            }
+            // get cliente object from reserva.clienteId
+            var cliente = await _context.Clientes.FirstOrDefaultAsync(m => m.Id == reserva.ClienteId);
+
             var viewModel = new ReservaDetailsViewModel
             {
                 Reserva = reserva,
-                Cliente = null,
+                Cliente = cliente,
                 Veiculo = veiculo,
                 Funcionario = null,
                 Recolha = recolha,

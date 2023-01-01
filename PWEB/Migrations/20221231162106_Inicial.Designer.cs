@@ -12,8 +12,8 @@ using PWEB.Data;
 namespace PWEB.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221230164708_Fotografias")]
-    partial class Fotografias
+    [Migration("20221231162106_Inicial")]
+    partial class Inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -300,10 +300,7 @@ namespace PWEB.Migrations
                     b.Property<bool>("Danos")
                         .HasColumnType("bit");
 
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FuncionarioId1")
+                    b.Property<string>("FuncionarioId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -319,7 +316,7 @@ namespace PWEB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId1");
+                    b.HasIndex("FuncionarioId");
 
                     b.HasIndex("ReservaId")
                         .IsUnique()
@@ -369,10 +366,7 @@ namespace PWEB.Migrations
                     b.Property<bool>("Danos")
                         .HasColumnType("bit");
 
-                    b.Property<int>("FuncionarioId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("FuncionarioId1")
+                    b.Property<string>("FuncionarioId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -388,7 +382,7 @@ namespace PWEB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FuncionarioId1");
+                    b.HasIndex("FuncionarioId");
 
                     b.HasIndex("ReservaId")
                         .IsUnique()
@@ -405,10 +399,7 @@ namespace PWEB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ClienteId1")
+                    b.Property<string>("ClienteId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -421,6 +412,9 @@ namespace PWEB.Migrations
                     b.Property<DateTime>("DataLevantamento")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("EmpresaId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("EntregaVeiculoId")
                         .HasColumnType("int");
 
@@ -432,7 +426,9 @@ namespace PWEB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId1");
+                    b.HasIndex("ClienteId");
+
+                    b.HasIndex("EmpresaId");
 
                     b.HasIndex("VeiculoId");
 
@@ -548,7 +544,7 @@ namespace PWEB.Migrations
                 {
                     b.HasOne("PWEB.Models.ApplicationUser", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId1")
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -576,7 +572,7 @@ namespace PWEB.Migrations
                 {
                     b.HasOne("PWEB.Models.ApplicationUser", "Funcionario")
                         .WithMany()
-                        .HasForeignKey("FuncionarioId1")
+                        .HasForeignKey("FuncionarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -593,9 +589,13 @@ namespace PWEB.Migrations
                 {
                     b.HasOne("PWEB.Models.ApplicationUser", "Cliente")
                         .WithMany("Reservas")
-                        .HasForeignKey("ClienteId1")
+                        .HasForeignKey("ClienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("PWEB.Models.Empresa", "Empresa")
+                        .WithMany()
+                        .HasForeignKey("EmpresaId");
 
                     b.HasOne("PWEB.Models.Veiculo", "Veiculo")
                         .WithMany("Reservas")
@@ -604,6 +604,8 @@ namespace PWEB.Migrations
                         .IsRequired();
 
                     b.Navigation("Cliente");
+
+                    b.Navigation("Empresa");
 
                     b.Navigation("Veiculo");
                 });
