@@ -124,7 +124,7 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
-                <select asp-for="Location" class="form-control" asp-items="ViewBag.TipoDeAulaId"></select>
+                <select asp-for="Location" class="form-control" asp-items="ViewBag.LocalizacaoVeiculos"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PickupDateAndTime" class="control-label"></label>
@@ -137,7 +137,7 @@
                 <span asp-validation-for="ReturnDateAndTime" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Calcular" class="btn btn-primary" />
+                <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </form>
     </ul>

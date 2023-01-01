@@ -1,0 +1,58 @@
+﻿@model PWEB_AulasP_2223.ViewModels.VehicleSearchViewModel
+
+@{
+    ViewData["Title"] = "Resultado de pesquisa";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<h1>Resultado de pesquisa</h1>
+<br />
+<br />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Marca do Veículo
+            </th>
+            <th>
+				Modelo do Veículo
+            </th>
+            <th>
+				Custo por dia
+            </th>
+            <th>
+				Nome da Empresa
+            </th>
+            <th>
+				Avaliação da Empresa
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Veiculos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Custo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empresa.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Empresa.Avaliacao)
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Reservar">Reservar</a>
+                    <a class="btn btn-secondary" asp-action="Detalhes">Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

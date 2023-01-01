@@ -10,7 +10,6 @@ namespace PWEB_AulasP_2223.ViewModels
         public string? Location { get; set; }
         public DateTime PickupDateAndTime { get; set; }
         public DateTime ReturnDateAndTime { get; set; }
-        public int VeiculoId { get; set; }
-        public Veiculo Veiculo { get; set; }
+        public List<Veiculo> Veiculos { get; set; }
     }
 }

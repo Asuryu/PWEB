@@ -25,6 +25,12 @@ namespace PWEB_AulasP_2223.Controllers
 
         public IActionResult Index()
         {
+            // Obter lista de todas as localizações dos veículos
+            var locations = _context.Veiculos
+                .Select(v => v.Localizacao)
+                .Distinct()
+                .ToList();
+            ViewData["Locations"] = new SelectList(locations);
             return View();
         }
 
@@ -35,32 +41,35 @@ namespace PWEB_AulasP_2223.Controllers
         }
 
 
-        /**[HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Search([Bind("Location,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
         {
             ViewData["Veiculos"] = new SelectList(_context.Veiculos, "Id", "Marca");
 
+            Console.WriteLine(search.Location);
+            Console.WriteLine(search.PickupDateAndTime);
+            Console.WriteLine(search.ReturnDateAndTime);
 
             if (search.PickupDateAndTime > search.ReturnDateAndTime)
                 ModelState.AddModelError("PickupDateAndTime", "A data de inicio não pode ser maior que a data de fim");
 
-            var Veiculo = _context.Veiculos.Find(search.VeiculoId);
-            if (Veiculo == null)
-            {
-                ModelState.AddModelError("VeiculoId", "Veículo inválido");
-            }
+            ModelState.Remove(nameof(search.Veiculos));
 
             if (ModelState.IsValid)
             {
-                var searchResult = await _context.Veiculos
-                         .Where(v => v.Id == search.VeiculoId)
-                         .Where(v => v.Localizacao == search.Location)
-                         .ToListAsync();
+                var veiculos = await _context.Veiculos
+                    .Include(v => v.Categoria)
+                    .Include(v => v.Empresa)
+                    .Include(v => v.Reservas)
+                    .Where(v => v.Localizacao == search.Location)
+                    .ToListAsync();
 
-                return View("SearchResult", searchResult);
+                search.Veiculos = veiculos;
+
+                return View("Search", search);
             }
 
             return View("search", search);
-        }**/
+        }
     }
 }
