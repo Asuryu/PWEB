@@ -9,6 +9,35 @@
 <h1>Resultado de pesquisa</h1>
 <br />
 <br />
+
+<div class="column">
+    <div class="col-10">
+        Ordenar por custo:
+        <a asp-action="Index" asp-controller="Search" asp-route-ordenarCustoAsc="true">Ascendente</a> |
+        <a asp-action="Index" asp-route-ordenarCustoAsc="false">Descendente</a>
+    </div>
+    <div class="col-10">
+        Ordenar por classificação:
+        <a asp-action="Index" asp-controller="Search" asp-route-ordenarClassificacaoAsc="true">Ascendente</a> |
+        <a asp-action="Index" asp-route-ordenarClassificacaoAsc="false">Descendente</a>
+    </div>
+    <div class="col-10">
+        <form method="post">
+            Categoria:
+            <select name="CategoriaId" asp-items="ViewBag.Categorias"></select>
+            <input class="btn btn-primary" type="submit" value="Pesquisar" />
+        </form>
+    </div>
+    <div class="col-10">
+        <form method="post">
+            Empresa:
+            <select name="EmpresaId" asp-items="ViewBag.Empresas"></select>
+            <input class="btn btn-primary" type="submit" value="Pesquisar" />
+        </form>
+    </div>
+    <br />
+</div>
+
 <table class="table">
     <thead>
         <tr>

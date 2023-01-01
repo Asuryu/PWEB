@@ -31,6 +31,13 @@ namespace PWEB_AulasP_2223.Controllers
                 .Distinct()
                 .ToList();
             ViewData["Locations"] = new SelectList(locations);
+            
+            var categories = _context.Categorias
+                .Select(c => c.Nome)
+                .Distinct()
+                .ToList();
+            ViewData["Categories"] = new SelectList(categories);
+            
             return View();
         }
 
@@ -66,7 +73,7 @@ namespace PWEB_AulasP_2223.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Search([Bind("Location,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
+        public async Task<IActionResult> Search([Bind("Location,Category,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
         {
             ModelState.Remove(nameof(search.Veiculos));
 
@@ -75,9 +82,9 @@ namespace PWEB_AulasP_2223.Controllers
 
             if (ModelState.IsValid)
             {
-                // List vehicles with no reservations in the given period
                 var vehicles = await _context.Veiculos
                     .Where(v => v.Localizacao == search.Location)
+                    .Where(v => v.Categoria.Nome == search.Category)
                     .Where(v => v.Reservas
                         .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
                                   r.DataEntrega < search.PickupDateAndTime))
@@ -92,6 +99,22 @@ namespace PWEB_AulasP_2223.Controllers
             }
 
             return Problem("Modelo inválido");
+        }
+
+        [Authorize]
+        public IActionResult Search()
+        {
+            var categories = _context.Categorias
+                .Select(c => c.Nome)
+                .Distinct()
+                .ToList();
+            var empresas = _context.Empresas
+                .Select(e => e.Nome)
+                .Distinct()
+                .ToList();
+            ViewData["Categories"] = new SelectList(categories);
+            ViewData["Empresas"] = new SelectList(empresas);
+            return View();
         }
     }
 }
