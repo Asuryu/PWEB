@@ -34,6 +34,30 @@ namespace PWEB_AulasP_2223.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Details(int? id)
+        {
+
+            if (id == null || _context.Veiculos == null)
+            {
+                return NotFound();
+            }
+
+            var veiculo = await _context.Veiculos
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (veiculo == null)
+            {
+                return NotFound();
+            }
+            var empresa = await _context.Empresas
+                .FirstOrDefaultAsync(m => m.Id == veiculo.EmpresaId);
+            var categoria = await _context.Categorias
+                .FirstOrDefaultAsync(m => m.Id == veiculo.CategoriaId);
+            veiculo.Empresa = empresa;
+            veiculo.Categoria = categoria;
+
+            return View(veiculo);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -44,32 +68,30 @@ namespace PWEB_AulasP_2223.Controllers
         [HttpPost]
         public async Task<IActionResult> Search([Bind("Location,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
         {
-            ViewData["Veiculos"] = new SelectList(_context.Veiculos, "Id", "Marca");
-
-            Console.WriteLine(search.Location);
-            Console.WriteLine(search.PickupDateAndTime);
-            Console.WriteLine(search.ReturnDateAndTime);
+            ModelState.Remove(nameof(search.Veiculos));
 
             if (search.PickupDateAndTime > search.ReturnDateAndTime)
-                ModelState.AddModelError("PickupDateAndTime", "A data de inicio não pode ser maior que a data de fim");
-
-            ModelState.Remove(nameof(search.Veiculos));
+                return Problem("Pickup date must be before return date");
 
             if (ModelState.IsValid)
             {
-                var veiculos = await _context.Veiculos
-                    .Include(v => v.Categoria)
-                    .Include(v => v.Empresa)
-                    .Include(v => v.Reservas)
+                // List vehicles with no reservations in the given period
+                var vehicles = await _context.Veiculos
                     .Where(v => v.Localizacao == search.Location)
+                    .Where(v => v.Reservas
+                        .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                  r.DataEntrega < search.PickupDateAndTime))
                     .ToListAsync();
 
-                search.Veiculos = veiculos;
+                vehicles.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                vehicles.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                search.Veiculos = vehicles;
 
                 return View("Search", search);
             }
 
-            return View("search", search);
+            return Problem("Modelo inválido");
         }
     }
 }

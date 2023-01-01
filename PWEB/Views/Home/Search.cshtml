@@ -49,8 +49,12 @@
                     @Html.DisplayFor(modelItem => item.Empresa.Avaliacao)
                 </td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Reservar">Reservar</a>
-                    <a class="btn btn-secondary" asp-action="Detalhes">Detalhes</a>
+					@if(User.Identity.IsAuthenticated){
+						<a class="btn btn-primary" asp-action="Reservar">Reservar</a>
+                    }else{
+                        <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Reservar</a>
+                    }
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id" >Detalhes</a>
                 </td>
             </tr>
         }
