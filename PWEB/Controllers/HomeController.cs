@@ -52,11 +52,12 @@ namespace PWEB_AulasP_2223.Controllers
 
             if (ModelState.IsValid)
             {
-                Veiculo x = new Veiculo();
-                x.PickupDateAndTime = search.PickupDateAndTime;
-                x.ReturnDateAndTime = search.ReturnDateAndTime;
-                x.Location = search.Location;
-                return View("PedidoConfirmacao", x);
+                var searchResult = await _context.Veiculos
+                         .Where(v => v.Id == search.VeiculoId)
+                         .Where(v => v.Localizacao == search.Location)
+                         .ToListAsync();
+
+                return View("SearchResult", searchResult);
             }
 
             return View("search", search);
