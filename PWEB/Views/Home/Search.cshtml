@@ -22,7 +22,7 @@
         <a asp-action="Index" asp-route-ordenarClassificacaoAsc="false">Descendente</a>
     </div>
     <div class="col-10">
-        <form method="post">
+        <form method="post" asp-action="SearchWithFilters">
             Categoria:
             <select name="CategoriaId" asp-items="ViewBag.Categorias"></select>
             <input class="btn btn-primary" type="submit" value="Pesquisar" />

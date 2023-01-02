@@ -75,6 +75,9 @@ namespace PWEB_AulasP_2223.Controllers
         [HttpPost]
         public async Task<IActionResult> Search([Bind("Location,Category,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
         {
+            ViewData["Categorias"] = new SelectList(_context.Categorias, "Id", "Nome");
+            ViewData["Empresas"] = new SelectList(_context.Empresas, "Id", "Nome");
+            
             ModelState.Remove(nameof(search.Veiculos));
 
             if (search.PickupDateAndTime > search.ReturnDateAndTime)
@@ -104,17 +107,17 @@ namespace PWEB_AulasP_2223.Controllers
         [Authorize]
         public IActionResult Search()
         {
-            var categories = _context.Categorias
-                .Select(c => c.Nome)
-                .Distinct()
-                .ToList();
-            var empresas = _context.Empresas
-                .Select(e => e.Nome)
-                .Distinct()
-                .ToList();
-            ViewData["Categories"] = new SelectList(categories);
-            ViewData["Empresas"] = new SelectList(empresas);
+            ViewData["Categorias"] = new SelectList(_context.Categorias, "Id", "Nome");
+            ViewData["Empresas"] = new SelectList(_context.Empresas, "Id", "Nome");
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchWithFilters([Bind("Location,Category,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
+        {
+            Console.WriteLine(search.Veiculos.ToList());
+
+            return Problem("Modelo inválido");
         }
     }
 }

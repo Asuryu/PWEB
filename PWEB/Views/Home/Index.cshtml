@@ -9,17 +9,27 @@
     .main {
         text-align: center;
         padding: 20px;
+		margin: 20px;
         color: black;
         height: 100%;
         width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center-flex;
+		flex-direction: column;
     }
 
     @*Styleimagetobeshownonlyinbody*@.image {
         width: auto;
-        height: 300px;
+        height: 500px;
         overflow: hidden;
         z-index: -1;
         padding: 20px;
+		margin: 20px;
+		border: 1px solid orange;
+		border-radius: 10px;
+		border-style: solid;
+		border-color: orange;
     }
 
     .image img {
@@ -38,75 +48,137 @@
         font-size: 20px;
     }
 
-
-    .text-bg-dark {
-        background-color: #343a40;
-        color: white;
-    }
-
     .searchContainer {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        background-color: #ff9e49;
-        padding: 10px;
-        border-radius: 5px;
-        width: 100%;
-    }
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: flex-start;
+		height: 100%;
+		width: 100%;
+		background-color: #f5f5f5;
+		border-radius: 10px;
+		border: 1px solid orange;
+		padding: 20px;
+		margin-top: 20px;
+		margin-bottom: 20px;
+		margin-right: 50px;
+		margin-left: -15px;
+	}
 
-    .searchContainer input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-    }
+    .searchButton {
+		color: white;
+		border: none;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+		font-size: 45px;
+	}
+	
+	.searchButton:focus {
+		outline: none;
+	}
 
-    .searchContainer button {
-        width: 100px;
-        padding: 10px;
-        border: none;
-        border-radius: 5px;
-        background-color: #ff9e49;
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-    }
+	.form_group input {
+		border: 1px solid orange;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+	}
+	
+	.form_group input:focus {
+		outline: none;
+	}
+	
+	.form_group select {
+		border: 1px solid orange;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+	}
 
-    .searchContainer button:hover {
-        background-color: #ff7f00;
-    }
+	.locationButton {
+		color: white;
+		border: none;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+	}
 
-    .searchContainer button:active {
-        background-color: #ff7f00;
-    }
+	.locationButton:hover {
+		background-color: orange;
+	}
 
-    .searchContainer button:focus {
-        outline: none;
-    }
+	.locationButton:active {
+		background-color: #ff6600;
+	}
 
-    .searchContainer select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        outline: none;
-    }
+	.locationButton:focus {
+		outline: none;
+	}
 
-    .searchContainer select:focus {
-        outline: none;
-    }
+	.categoryButton {
+		color: white;
+		border: none;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+	}
 
-    .searchContainer label {
-        font-weight: bold;
-        margin-right: 10px;
-    }
+	.categoryButton:hover {
+		background-color: orange;
+	}
+	
+	.categoryButton:active {
+		background-color: #ff6600;
+	}
+	
+	.categoryButton:focus {
+		outline: none;
+	}
+	
+	.form_group select:focus {
+		outline: none;
+	}
 
-    .searchContainer .form-group {
-        width: 100%;
-        margin: 0 10px;
-    }
+	.pickupButton {
+		color: white;
+		border: none;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+	}
+	
+	.pickupButton:hover {
+		background-color: orange;
+	}
+	
+	.pickupButton:active {
+		background-color: #ff6600;
+	}
+
+	.pickupButton:focus {
+		outline: none;
+	}
+	
+	.returnButton {
+		color: white;
+		border: none;
+		border-radius: 10px;
+		padding: 10px;
+		margin: 10px;
+	}
+
+	.returnButton:hover {
+		background-color: orange;
+	}
+
+	.returnButton:active {
+		background-color: #ff6600;
+	}
+
+	.returnButton:focus {
+		outline: none;
+	}
 </style>
 
 <div class="main">
@@ -122,25 +194,25 @@
     <ul>
         <form asp-action="Search" class="searchContainer">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
+            <div class="locationButton">
                 <label asp-for="Location" class="control-label"></label>
                 <select asp-for="Location" class="form-control" asp-items="ViewBag.Locations"></select>
             </div>
-			<div class="form-group">
+			<div class="categoryButton">
                 <label asp-for="Category" class="control-label"></label>
                 <select asp-for="Category" class="form-control" asp-items="ViewBag.Categories"></select>
             </div>
-            <div class="form-group">
+            <div class="pickupButton">
                 <label asp-for="PickupDateAndTime" class="control-label"></label>
                 <input asp-for="PickupDateAndTime" class="form-control" />
                 <span asp-validation-for="PickupDateAndTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="returnButton">
                 <label asp-for="ReturnDateAndTime" class="control-label"></label>
                 <input asp-for="ReturnDateAndTime" class="form-control" />
                 <span asp-validation-for="ReturnDateAndTime" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="searchButton">
                 <input type="submit" value="Search" class="btn btn-primary" />
             </div>
         </form>
