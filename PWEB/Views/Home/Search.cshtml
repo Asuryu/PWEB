@@ -22,14 +22,26 @@
 
 <div class="column">
     <div class="col-10">
-        Ordenar por custo:
-        <a asp-action="Index" asp-controller="Search" asp-route-ordenarCustoAsc="true">Ascendente</a> |
-        <a asp-action="Index" asp-route-ordenarCustoAsc="false">Descendente</a>
+        <form method="post" asp-action="Fixe">
+            Ordenar por custo:
+            <input type="hidden" name="PickupDateAndTime" value="@Model.PickupDateAndTime" />
+            <input type="hidden" name="ReturnDateAndTime" value="@Model.ReturnDateAndTime" />
+            <input type="hidden" name="Category" value="@Model.Category" />
+            <input type="hidden" name="Location" value="@Model.Location" />
+            <select name="OrdenarPorCusto" asp-items="ViewBag.OrdenarPorCusto"></select>
+            <input class="btn btn-primary" type="submit" value="Pesquisar" />
+        </form>
     </div>
     <div class="col-10">
-        Ordenar por classificação:
-        <a asp-action="Index" asp-controller="Search" asp-route-ordenarClassificacaoAsc="true">Ascendente</a> |
-        <a asp-action="Index" asp-route-ordenarClassificacaoAsc="false">Descendente</a>
+        <form method="post" asp-action="Fixe">
+            Ordenar por classificação:
+            <input type="hidden" name="PickupDateAndTime" value="@Model.PickupDateAndTime" />
+            <input type="hidden" name="ReturnDateAndTime" value="@Model.ReturnDateAndTime" />
+            <input type="hidden" name="Category" value="@Model.Category" />
+            <input type="hidden" name="Location" value="@Model.Location" />
+            <select name="OrdenarPorClassificacao" asp-items="ViewBag.OrdenarPorClassificacao"></select>
+            <input class="btn btn-primary" type="submit" value="Pesquisar" />
+        </form>
     </div>
     <div class="col-10">
         <form method="post" asp-action="Fixe">
@@ -43,7 +55,7 @@
         </form>
     </div>
     <div class="col-10">
-        <form method="post">
+        <form method="post" asp-action="Fixe">
             Empresa:
             <input type="hidden" name="PickupDateAndTime" value="@Model.PickupDateAndTime" />
             <input type="hidden" name="ReturnDateAndTime" value="@Model.ReturnDateAndTime" />

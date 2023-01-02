@@ -89,6 +89,10 @@ namespace PWEB_AulasP_2223.Controllers
 
             ViewData["Categories"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
             ViewData["Empresas"] = new SelectList(_context.Empresas.ToList(), "Id", "Nome");
+            List<string> ordenarPorClassificacao = new List<string>(); ordenarPorClassificacao.Add("Ascendente"); ordenarPorClassificacao.Add("Descendente");
+            List<string> ordenarPorCusto = new List<string>(); ordenarPorCusto.Add("Ascendente"); ordenarPorCusto.Add("Descendente");
+            ViewData["OrdenarPorClassificacao"] = new SelectList(ordenarPorClassificacao);
+            ViewData["OrdenarPorCusto"] = new SelectList(ordenarPorCusto);
 
             if (search.PickupDateAndTime > search.ReturnDateAndTime)
                 return Problem("Pickup date must be before return date");
@@ -120,16 +124,25 @@ namespace PWEB_AulasP_2223.Controllers
 
             ViewData["Categories"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
             ViewData["Empresas"] = new SelectList(_context.Empresas.ToList(), "Id", "Nome");
+            List<string> ordenarPorClassificacao = new List<string>(); ordenarPorClassificacao.Add("Ascendente"); ordenarPorClassificacao.Add("Descendente");
+            List<string> ordenarPorCusto = new List<string>(); ordenarPorCusto.Add("Ascendente"); ordenarPorCusto.Add("Descendente");
+            ViewData["OrdenarPorClassificacao"] = new SelectList(ordenarPorClassificacao);
+            ViewData["OrdenarPorCusto"] = new SelectList(ordenarPorCusto);
 
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Fixe(int? CategoriaId, int? EmpresaId, [Bind("Location,Category,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
+        public async Task<IActionResult> Fixe(int? CategoriaId, int? EmpresaId, string? OrdenarPorCusto, string? OrdenarPorClassificacao, [Bind("Location,Category,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
         {
 
             ViewData["Categories"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
             ViewData["Empresas"] = new SelectList(_context.Empresas.ToList(), "Id", "Nome");
+
+            List<string> ordenarPorClassificacao = new List<string>(); ordenarPorClassificacao.Add("Ascendente"); ordenarPorClassificacao.Add("Descendente");
+            List<string> ordenarPorCusto = new List<string>(); ordenarPorCusto.Add("Ascendente"); ordenarPorCusto.Add("Descendente");
+            ViewData["OrdenarPorClassificacao"] = new SelectList(ordenarPorClassificacao);
+            ViewData["OrdenarPorCusto"] = new SelectList(ordenarPorCusto);
 
             ModelState.Remove(nameof(search.Veiculos));
             Console.WriteLine(CategoriaId);
@@ -175,6 +188,86 @@ namespace PWEB_AulasP_2223.Controllers
                     search.Veiculos = vehicles;
 
                     return View("Search", search);
+                }
+
+                if (OrdenarPorCusto != null)
+                {
+                    if (OrdenarPorCusto == "Ascendente")
+                    {
+                        var vehicles = await _context.Veiculos
+                        .Where(v => v.Localizacao == search.Location)
+                        .Where(v => v.Categoria.Nome == search.Category)
+                        .Where(v => v.Reservas
+                            .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                      r.DataEntrega < search.PickupDateAndTime))
+                        .OrderBy(v => v.Custo)
+                        .ToListAsync();
+
+                        vehicles.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                        vehicles.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                        search.Veiculos = vehicles;
+
+                        return View("Search", search);
+                    }
+                    else
+                    {
+                        var vehicles = await _context.Veiculos
+                        .Where(v => v.Localizacao == search.Location)
+                        .Where(v => v.Categoria.Nome == search.Category)
+                        .Where(v => v.Reservas
+                            .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                      r.DataEntrega < search.PickupDateAndTime))
+                        .OrderByDescending(v => v.Custo)
+                        .ToListAsync();
+
+                        vehicles.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                        vehicles.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                        search.Veiculos = vehicles;
+
+                        return View("Search", search);
+                    }
+                }
+
+                if (OrdenarPorClassificacao != null)
+                {
+                    if (OrdenarPorClassificacao == "Ascendente")
+                    {
+                        var vehicles = await _context.Veiculos
+                        .Where(v => v.Localizacao == search.Location)
+                        .Where(v => v.Categoria.Nome == search.Category)
+                        .Where(v => v.Reservas
+                            .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                      r.DataEntrega < search.PickupDateAndTime))
+                        .OrderBy(v => v.Custo)
+                        .ToListAsync();
+
+                        vehicles.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                        vehicles.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                        search.Veiculos = vehicles;
+
+                        return View("Search", search);
+                    }
+                    else
+                    {
+                        var vehicles = await _context.Veiculos
+                        .Where(v => v.Localizacao == search.Location)
+                        .Where(v => v.Categoria.Nome == search.Category)
+                        .Where(v => v.Reservas
+                            .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                      r.DataEntrega < search.PickupDateAndTime))
+                        .OrderByDescending(v => v.Custo)
+                        .ToListAsync();
+
+                        vehicles.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                        vehicles.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                        search.Veiculos = vehicles;
+
+                        return View("Search", search);
+                    }
                 }
 
                 var vehicless = await _context.Veiculos
