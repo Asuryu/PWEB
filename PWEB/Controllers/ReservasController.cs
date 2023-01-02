@@ -304,6 +304,62 @@ namespace PWEB.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
+        [Authorize(Roles = "Cliente")]
+        public async Task<IActionResult> Rent(int VeiculoId)
+        {
+            // check if veiculo exists
+            var veiculo = await _context.Veiculos.FirstOrDefaultAsync(m => m.Id == VeiculoId);
+            if (veiculo == null)
+            {
+                return Problem("Não foi possível encontrar esse veículo.");
+            }
+
+            ReservaViewModel reservaViewModel = new ReservaViewModel();
+            reservaViewModel.VeiculoId = VeiculoId;
+
+            return View(reservaViewModel);
+        }
+
+        [Authorize]
+        [Authorize(Roles = "Cliente")]
+        [HttpPost]
+        public async Task<IActionResult> Rent(ReservaViewModel reservaViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                // get veiculo object from reservaViewModel.VeiculoId
+                var veiculo = await _context.Veiculos.FirstOrDefaultAsync(m => m.Id == reservaViewModel.VeiculoId);
+                if(veiculo == null)
+                {
+                    return Problem("Não foi possível encontrar esse veículo.");
+                }
+
+                // get current logged in user
+                var user = await _userManager.GetUserAsync(User);
+
+                // create new reserva object
+                Reserva novaReserva = new Reserva
+                {
+                    DataLevantamento = reservaViewModel.DataLevantamento,
+                    DataEntrega = reservaViewModel.DataEntrega,
+                    Confirmada = false,
+                    ClienteId = user.Id,
+                    VeiculoId = reservaViewModel.VeiculoId,
+                    EmpresaId = veiculo.EmpresaId,
+                    RecolhaVeiculoId = 0,
+                    EntregaVeiculoId = 0
+                };
+
+                // add new reserva to database
+                _context.Reservas.Add(novaReserva);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("MyReservations");
+            }
+            return View(reservaViewModel);
+        }
+
         private bool ReservaExists(int id)
         {
             return _context.Reservas.Any(e => e.Id == id);

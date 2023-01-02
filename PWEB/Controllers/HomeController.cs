@@ -8,6 +8,8 @@ using PWEB_AulasP_2223.Data;
 using PWEB_AulasP_2223.Models;
 using System.Diagnostics;
 using PWEB_AulasP_2223.ViewModels;
+using PWEB.Models;
+using Microsoft.CodeAnalysis;
 
 namespace PWEB_AulasP_2223.Controllers
 {
@@ -21,6 +23,11 @@ namespace PWEB_AulasP_2223.Controllers
         {
             _logger = logger;
             _context = context;
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
         }
 
         public IActionResult Index()
@@ -77,6 +84,9 @@ namespace PWEB_AulasP_2223.Controllers
         {
             ModelState.Remove(nameof(search.Veiculos));
 
+            ViewData["Categories"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
+            ViewData["Empresas"] = new SelectList(_context.Empresas.ToList(), "Id", "Nome");
+
             if (search.PickupDateAndTime > search.ReturnDateAndTime)
                 return Problem("Pickup date must be before return date");
 
@@ -104,17 +114,85 @@ namespace PWEB_AulasP_2223.Controllers
         [Authorize]
         public IActionResult Search()
         {
-            var categories = _context.Categorias
-                .Select(c => c.Nome)
-                .Distinct()
-                .ToList();
-            var empresas = _context.Empresas
-                .Select(e => e.Nome)
-                .Distinct()
-                .ToList();
-            ViewData["Categories"] = new SelectList(categories);
-            ViewData["Empresas"] = new SelectList(empresas);
+
+            ViewData["Categories"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
+            ViewData["Empresas"] = new SelectList(_context.Empresas.ToList(), "Id", "Nome");
+
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Fixe(int? CategoriaId, int? EmpresaId, [Bind("Location,Category,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
+        {
+
+            ViewData["Categories"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
+            ViewData["Empresas"] = new SelectList(_context.Empresas.ToList(), "Id", "Nome");
+
+            ModelState.Remove(nameof(search.Veiculos));
+            Console.WriteLine(CategoriaId);
+            Console.WriteLine(EmpresaId);
+
+            if (search.PickupDateAndTime > search.ReturnDateAndTime)
+                return Problem("Pickup date must be before return date");
+
+            if (ModelState.IsValid)
+            {
+                if(CategoriaId != null)
+                {
+                    var vehicles = await _context.Veiculos
+                    .Where(v => v.Localizacao == search.Location)
+                    .Where(v => v.CategoriaId == CategoriaId)
+                    .Where(v => v.Reservas
+                        .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                  r.DataEntrega < search.PickupDateAndTime))
+                    .ToListAsync();
+
+                    vehicles.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                    vehicles.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                    search.Veiculos = vehicles;
+
+                    return View("Search", search);
+                }
+
+                if (EmpresaId != null)
+                {
+                    var vehicles = await _context.Veiculos
+                    .Where(v => v.Localizacao == search.Location)
+                    .Where(v => v.Categoria.Nome == search.Category)
+                    .Where(v => v.EmpresaId == EmpresaId)
+                    .Where(v => v.Reservas
+                        .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                  r.DataEntrega < search.PickupDateAndTime))
+                    .ToListAsync();
+
+                    vehicles.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                    vehicles.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                    search.Veiculos = vehicles;
+
+                    return View("Search", search);
+                }
+
+                var vehicless = await _context.Veiculos
+                    .Where(v => v.Localizacao == search.Location)
+                    .Where(v => v.Categoria.Nome == search.Category)
+                    .Where(v => v.Reservas
+                        .All(r => r.DataLevantamento > search.ReturnDateAndTime ||
+                                  r.DataEntrega < search.PickupDateAndTime))
+                    .ToListAsync();
+
+                vehicless.ForEach(v => v.Categoria = _context.Categorias.Find(v.CategoriaId));
+                vehicless.ForEach(v => v.Empresa = _context.Empresas.Find(v.EmpresaId));
+
+                search.Veiculos = vehicless;
+
+                return View("Search", search);
+
+
+            }
+
+            return Problem("Modelo inválido");
         }
     }
 }

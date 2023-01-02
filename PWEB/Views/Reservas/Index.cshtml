@@ -84,7 +84,7 @@
                     <a class="btn btn-success" asp-action="Confirm" asp-route-reservaId="@item.Id">Confirmar Reserva</a>
                     <a class="btn btn-danger" asp-action="Deny" asp-route-reservaId="@item.Id">Rejeitar Reserva</a>
                 }
-                @if (item.EntregaVeiculoId == 0)
+                @if (item.EntregaVeiculoId == 0 && item.Confirmada)
                 {
                     <a class="btn btn-primary" asp-action="Deliver" asp-route-reservaId="@item.Id">Entregar Veículo</a>
                 }
@@ -92,7 +92,7 @@
                 {
                     <a class="btn btn-primary disabled" asp-action="Deliver" asp-route-reservaId="@item.Id">Entregar Veículo</a>
                 }
-                @if (item.RecolhaVeiculoId == 0)
+                @if (item.RecolhaVeiculoId == 0 && item.Confirmada)
                 {
                     <a class="btn btn-primary" asp-action="Receive" asp-route-reservaId="@item.Id">Receber Veículo</a>
                 }

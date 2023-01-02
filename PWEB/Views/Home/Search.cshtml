@@ -1,14 +1,24 @@
 ﻿@model PWEB_AulasP_2223.ViewModels.VehicleSearchViewModel
 
 @{
-    ViewData["Title"] = "Resultado de pesquisa";
+    ViewData["Title"] = "Resultado de Pesquisa";
     Layout = "~/Views/Shared/_Layout2.cshtml";
 }
 
 
-<h1>Resultado de pesquisa</h1>
+<h1>Resultado de Pesquisa</h1>
 <br />
 <br />
+
+<!-- build ViewModel to pass to the controller -->
+@{
+    var searchViewModel = new PWEB_AulasP_2223.ViewModels.VehicleSearchViewModel();
+    searchViewModel.PickupDateAndTime = Model.PickupDateAndTime;
+    searchViewModel.ReturnDateAndTime = Model.ReturnDateAndTime;
+    searchViewModel.Category = Model.Category;
+    searchViewModel.Location = Model.Location;
+}
+
 
 <div class="column">
     <div class="col-10">
@@ -22,15 +32,23 @@
         <a asp-action="Index" asp-route-ordenarClassificacaoAsc="false">Descendente</a>
     </div>
     <div class="col-10">
-        <form method="post">
+        <form method="post" asp-action="Fixe">
             Categoria:
-            <select name="CategoriaId" asp-items="ViewBag.Categorias"></select>
+            <input type="hidden" name="PickupDateAndTime" value="@Model.PickupDateAndTime" />
+            <input type="hidden" name="ReturnDateAndTime" value="@Model.ReturnDateAndTime" />
+            <input type="hidden" name="Category" value="@Model.Category" />
+            <input type="hidden" name="Location" value="@Model.Location" />
+            <select name="CategoriaId" asp-items="ViewBag.Categories"></select>
             <input class="btn btn-primary" type="submit" value="Pesquisar" />
         </form>
     </div>
     <div class="col-10">
         <form method="post">
             Empresa:
+            <input type="hidden" name="PickupDateAndTime" value="@Model.PickupDateAndTime" />
+            <input type="hidden" name="ReturnDateAndTime" value="@Model.ReturnDateAndTime" />
+            <input type="hidden" name="Category" value="@Model.Category" />
+            <input type="hidden" name="Location" value="@Model.Location" />
             <select name="EmpresaId" asp-items="ViewBag.Empresas"></select>
             <input class="btn btn-primary" type="submit" value="Pesquisar" />
         </form>
@@ -42,19 +60,22 @@
     <thead>
         <tr>
             <th>
-                Marca do Veículo
+                Marca
             </th>
             <th>
-				Modelo do Veículo
+                Modelo
             </th>
             <th>
-				Custo por dia
+                Custo
             </th>
             <th>
-				Nome da Empresa
+                Empresa
             </th>
             <th>
-				Avaliação da Empresa
+                Avaliação da Empresa
+            </th>
+            <th>
+                Ações
             </th>
         </tr>
     </thead>
@@ -78,12 +99,15 @@
                     @Html.DisplayFor(modelItem => item.Empresa.Avaliacao)
                 </td>
                 <td>
-					@if(User.Identity.IsAuthenticated){
-						<a class="btn btn-primary" asp-action="Reservar">Reservar</a>
-                    }else{
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-primary" asp-controller="Reservas" asp-action="Rent" asp-route-VeiculoId="@item.Id">Reservar</a>
+                    }
+                    else
+                    {
                         <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Reservar</a>
                     }
-                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id" >Detalhes</a>
+                    <a class="btn btn-secondary" asp-action="Details" asp-route-id="@item.Id">Detalhes</a>
                 </td>
             </tr>
         }
