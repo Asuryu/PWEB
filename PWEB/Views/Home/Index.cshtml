@@ -21,7 +21,7 @@
 
     @*Styleimagetobeshownonlyinbody*@.image {
         width: auto;
-        height: 500px;
+        height: 350px;
         overflow: hidden;
         z-index: -1;
         padding: 20px;
@@ -182,6 +182,7 @@
 </style>
 
 <div class="main">
+    <img style="align-self:center; width: 500px;" src="~/img/banner.png" alt="Car Rental Banner" />
     <div class="image">
         <img src="https://www.incimages.com/uploaded_files/image/1920x1080/getty_649362670_395940.jpg"
              alt="Car Rental" />
@@ -198,7 +199,7 @@
                 <label asp-for="Location" class="control-label"></label>
                 <select asp-for="Location" class="form-control" asp-items="ViewBag.Locations"></select>
             </div>
-			<div class="categoryButton">
+            <div class="categoryButton">
                 <label asp-for="Category" class="control-label"></label>
                 <select asp-for="Category" class="form-control" asp-items="ViewBag.Categories"></select>
             </div>
