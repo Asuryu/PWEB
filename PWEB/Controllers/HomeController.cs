@@ -82,6 +82,9 @@ namespace PWEB_AulasP_2223.Controllers
         [HttpPost]
         public async Task<IActionResult> Search([Bind("Location,Category,PickupDateAndTime,ReturnDateAndTime")] VehicleSearchViewModel search)
         {
+            ViewData["Categorias"] = new SelectList(_context.Categorias, "Id", "Nome");
+            ViewData["Empresas"] = new SelectList(_context.Empresas, "Id", "Nome");
+            
             ModelState.Remove(nameof(search.Veiculos));
 
             ViewData["Categories"] = new SelectList(_context.Categorias.ToList(), "Id", "Nome");
