@@ -38,7 +38,7 @@ namespace PWEB.Controllers
 
             var current_user = await _userManager.GetUserAsync(HttpContext.User);
             return View(await _context.Reservas
-                .Where(c => c.ClienteId == current_user.Id)
+                .Where(c => c.ClienteId == current_user.Id && c.DataEntrega >= DateTime.Now)
                 .ToListAsync());
         }
 
@@ -49,7 +49,9 @@ namespace PWEB.Controllers
             ViewData["Title"] = "Lista de Reservas";
 
             var current_user = await _userManager.GetUserAsync(HttpContext.User);
-            return View(await _context.Reservas.Where(c => c.ClienteId == current_user.Id).ToListAsync());
+            return View(await _context.Reservas.
+                Where(c => c.ClienteId == current_user.Id && c.DataEntrega < DateTime.Now)
+                .ToListAsync());
         }
 
         [Authorize]
